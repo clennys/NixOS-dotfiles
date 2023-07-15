@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./unstable.nix
     ];
 
   # Bootloader.
@@ -46,7 +47,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  /*services.xserver.desktopManager.gnome.enable = true;
 
 	environment.gnome.excludePackages = (with pkgs; [
 				gnome-photos
@@ -66,14 +67,44 @@
 					hitori # sudoku game
 					atomix # puzzle game
 				]);
+				*/
+ programs.hyprland.enable = true;
 
-programs.dconf.enable = true;
+
+
+# programs.dconf.enable = true;
+systemd = {
+  user.services.polkit-gnome-authentication-agent-1 = {
+    description = "polkit-gnome-authentication-agent-1";
+    wantedBy = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+  };
+};
+
+services.gnome.gnome-keyring.enable = true;
+
+services.blueman.enable = true;
+
+security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
+  };
 
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
     xkbVariant = "dvorak-alt-intl";
   };
+
 
   # Configure console keymap
   console.keyMap = "dvorak";
@@ -82,7 +113,7 @@ programs.dconf.enable = true;
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -110,19 +141,21 @@ programs.dconf.enable = true;
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
+      /* gnomeExtensions.vertical-workspaces
+      gnomeExtensions.pop-shell
+      gnomeExtensions.caffeine
+      gnome.gnome-tweaks
+      gnome.dconf-editor
+      */
+
       firefox
       alacritty
-      gnomeExtensions.vertical-workspaces
-      gnomeExtensions.pop-shell
       pcmanfm
       nextcloud-client
       zotero
       okular
-      terminus-nerdfont
       starship
       neovim
-      gnome.gnome-tweaks
-      gnome.dconf-editor
       gnome.networkmanager-vpnc
       networkmanagerapplet
       signal-desktop
@@ -130,10 +163,29 @@ programs.dconf.enable = true;
       zoxide
       wofi
       brave
-      gnomeExtensions.caffeine
-    #  thunderbird
+      hyprpaper
+      hyprpicker
+      dunst
+      xdg-desktop-portal-hyprland
+      hyprland-protocols
+      gnome.gnome-keyring
+      polkit_gnome
+      pavucontrol
+      playerctl
+      brightnessctl
+      wdisplays
+      sway-contrib.grimshot
+      swaylock
+      mpv
     ];
   };
+
+  fonts.fonts = with pkgs; [
+  noto-fonts
+  terminus-nerdfont
+  cantarell-fonts
+  font-awesome
+];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -147,6 +199,7 @@ programs.dconf.enable = true;
    exa
    fzf
    neofetch
+   pulseaudio
   ];
   services.fprintd = {
 	enable = true;
@@ -167,7 +220,7 @@ programs.dconf.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  # networking.firewallallowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
