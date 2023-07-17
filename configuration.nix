@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./unstable.nix
     ];
@@ -27,7 +28,7 @@
   boot.initrd.luks.devices."luks-c3e3bc23-3e5e-4e19-8042-5b4750ee20ab".keyFile = "/crypto_keyfile.bin";
 
   networking.hostName = "framework"; # Define your hostname.
- # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -49,51 +50,60 @@
   services.xserver.displayManager.gdm.enable = true;
   /*services.xserver.desktopManager.gnome.enable = true;
 
-	environment.gnome.excludePackages = (with pkgs; [
-				gnome-photos
-				gnome-tour
-				]) ++ (with pkgs.gnome; [
-					cheese # webcam tool
-					gnome-music
-					gnome-terminal
-					gedit # text editor
-					epiphany # web browser
-					geary # email reader
-					evince # document viewer
-					gnome-characters
-					totem # video player
-					tali # poker game
-					iagno # go game
-					hitori # sudoku game
-					atomix # puzzle game
-				]);
-				*/
- programs.hyprland.enable = true;
+     	environment.gnome.excludePackages = (with pkgs; [
+    				gnome-photos
+    				gnome-tour
+    				]) ++ (with pkgs.gnome; [
+     					cheese # webcam tool
+     					gnome-music
+     					gnome-terminal
+     					gedit # text editor
+     					epiphany # web browser
+     					geary # email reader
+     					evince # document viewer
+     					gnome-characters
+     					totem # video player
+     					tali # poker game
+     					iagno # go game
+     					hitori # sudoku game
+     					atomix # puzzle game
+    				]);
+    				*/
+  programs.hyprland.enable = true;
+
+  hardware.opengl.extraPackages = with pkgs; [
+    mesa_drivers
+    vaapiIntel
+    vaapiVdpau
+    libvdpau-va-gl
+    intel-media-driver
+  ];
 
 
 
-# programs.dconf.enable = true;
-systemd = {
-  user.services.polkit-gnome-authentication-agent-1 = {
-    description = "polkit-gnome-authentication-agent-1";
-    wantedBy = [ "graphical-session.target" ];
-    wants = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    serviceConfig = {
+  # programs.dconf.enable = true;
+  systemd = {
+    user.services.polkit-gnome-authentication-agent-1 = {
+      description = "polkit-gnome-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         Restart = "on-failure";
         RestartSec = 1;
         TimeoutStopSec = 10;
       };
+    };
   };
-};
 
-services.gnome.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
-services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
-security.pam.services.swaylock = {
+  security.pam.services.swaylock = {
     text = ''
       auth include login
     '';
@@ -132,7 +142,7 @@ security.pam.services.swaylock = {
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
- programs.zsh.enable = true;
+  programs.zsh.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dhuber = {
@@ -177,59 +187,71 @@ security.pam.services.swaylock = {
       sway-contrib.grimshot
       swaylock
       mpv
+      vscode.fhs
     ];
   };
 
   fonts.fonts = with pkgs; [
-  noto-fonts
-  terminus-nerdfont
-  cantarell-fonts
-  font-awesome
-];
+    noto-fonts
+    terminus-nerdfont
+    cantarell-fonts
+    font-awesome
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-   git
-   fprintd
-   exa
-   fzf
-   neofetch
-   pulseaudio
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    git
+    fprintd
+    exa
+    fzf
+    neofetch
+    pulseaudio
+    htop
   ];
+
   services.fprintd = {
-	enable = true;
-};
+    enable = true;
+  };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  services.tlp.enable = true;
+  powerManagement =
+    {
+      enable = true;
+      powertop.enable = true;
+    };
 
-  # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+      # Some programs need SUID wrappers, can be configured further or are
+      # started in user sessions.
+      # programs.mtr.enable = true;
+      # programs.gnupg.agent = {
+      #   enable = true;
+      #   enableSSHSupport = true;
+      # };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewallallowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+      # List services that you want to enable:
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+      # Enable the OpenSSH daemon.
+      # services.openssh.enable = true;
+
+      # Open ports in the firewall.
+      # networking.firewall.allowedTCPPorts = [ ... ];
+      # networking.firewallallowedUDPPorts = [ ... ];
+      # Or disable the firewall altogether.
+      # networking.firewall.enable = false;
+
+      # This value determines the NixOS release from which the default
+      # settings for stateful data, like file locations and database versions
+      # on your system were taken. It‘s perfectly fine and recommended to leave
+      # this value at the release version of the first install of this system.
+      # Before changing this value read the documentation for this option
+      # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+      system.stateVersion = "23.05"; # Did you read the comment?
 
 }

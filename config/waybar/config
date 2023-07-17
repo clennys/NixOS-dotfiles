@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "bottom", // Waybar at the bottom of your screen
-    "height": 30, // Waybar height
+    "height": 27, // Waybar height
     // "width": 1366, // Waybar width
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
@@ -12,7 +12,7 @@
         "spacing": 10
     },
         "clock": {
-        "format": "{:%H:%M %Y-%m-%d}",
+        "format": "{:%Y-%m-%d %H:%M}",
     },
     "battery": {
         "bat": "BAT1",

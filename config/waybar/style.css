@@ -7,7 +7,7 @@
 }
 
 window#waybar {
-    background: #1c2023;
+    background: rgba(28,32,35, 0.8);
     color: white;
 }
 
@@ -41,6 +41,10 @@ window#waybar {
 #clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode {
     padding: 0 4px;
     margin: 0 4px;
+}
+
+#window, #workspaces {
+    padding: 0 4px;
 }
 
 #clock {
