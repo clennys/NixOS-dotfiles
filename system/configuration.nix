@@ -48,7 +48,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  /*services.xserver.desktopManager.gnome.enable = true;
+ /* services.xserver.desktopManager.gnome.enable = true;
 
      	environment.gnome.excludePackages = (with pkgs; [
     				gnome-photos
@@ -68,20 +68,19 @@
      					hitori # sudoku game
      					atomix # puzzle game
     				]);
-    				*/
+				*/
   programs.hyprland.enable = true;
 
+  hardware.opengl.enable = true;
   hardware.opengl.extraPackages = with pkgs; [
-    mesa_drivers
-    vaapiIntel
-    vaapiVdpau
-    libvdpau-va-gl
     intel-media-driver
   ];
+   services.logind.extraConfig = ''
+    # don’t shutdown when power button is short-pressed
+    HandlePowerKey=hibernate
+  '';
 
-
-
-  # programs.dconf.enable = true;
+   programs.dconf.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
@@ -98,10 +97,19 @@
     };
   };
 
+  nix.settings = {
+    keep-outputs = true;
+    keep-derivations = true;
+  };
+  environment.pathsToLink = [
+    "/share/nix-direnv"
+  ];
+
   services.gnome.gnome-keyring.enable = true;
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+  services.fwupd.enable = true;
 
   security.pam.services.swaylock = {
     text = ''
@@ -157,7 +165,6 @@
       gnome.gnome-tweaks
       gnome.dconf-editor
       */
-
       firefox
       alacritty
       pcmanfm
@@ -177,6 +184,7 @@
       hyprpicker
       dunst
       xdg-desktop-portal-hyprland
+	  nixfmt
       hyprland-protocols
       gnome.gnome-keyring
       polkit_gnome
@@ -188,8 +196,13 @@
       swaylock
       mpv
       vscode.fhs
+      teams
+      deluge-gtk
+      vimiv-qt
     ];
   };
+
+
 
   fonts.fonts = with pkgs; [
     noto-fonts
@@ -213,6 +226,12 @@
     neofetch
     pulseaudio
     htop
+    gnumake
+    wget
+    rsync
+    direnv
+    nix-direnv 
+    unzip
   ];
 
   services.fprintd = {
@@ -223,8 +242,14 @@
   powerManagement =
     {
       enable = true;
-      powertop.enable = true;
     };
+/*
+    xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk];
+    };
+    */
+
 
 
       # Some programs need SUID wrappers, can be configured further or are

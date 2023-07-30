@@ -11,6 +11,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+    boot.kernelParams = [ "module_blacklist=hid_sensor_hub" "mem_sleep_default=deep"];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =

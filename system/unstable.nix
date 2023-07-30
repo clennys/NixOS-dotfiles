@@ -6,5 +6,6 @@ in
 {
   environment.systemPackages = with pkgs; [
     unstable.waybar
+    unstable.nixd
   ];
 }
