@@ -167,6 +167,7 @@
       */
       firefox
       alacritty
+	  kitty
       pcmanfm
       nextcloud-client
       zotero
@@ -232,6 +233,8 @@
     direnv
     nix-direnv 
     unzip
+	ripgrep
+	qt5.qtwayland
   ];
 
   services.fprintd = {
