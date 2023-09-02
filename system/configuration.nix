@@ -235,6 +235,7 @@
     unzip
 	ripgrep
 	qt5.qtwayland
+	tmux
   ];
 
   services.fprintd = {
