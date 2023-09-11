@@ -38,7 +38,7 @@ window#waybar {
     border-bottom: 3px solid white;
 }
 
-#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode {
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #pulseaudio.muted {
     padding: 0 4px;
     margin: 0 4px;
 }
