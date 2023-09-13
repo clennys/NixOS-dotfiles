@@ -44,9 +44,9 @@
             "critical": 15
         },
         // Connected to AC
-        "format": "󱐋 {icon}  ", // Icon: bolt
+        "format": "󱐋 {icon} ", // Icon: bolt
         // Not connected to AC
-        "format-discharging": "{icon}  ",
+        "format-discharging": "{icon} ",
         "format-icons": [
             "", // Icon: battery-full
             "", // Icon: battery-three-quarters
@@ -60,7 +60,7 @@
 
 	"network": {
 		"interval": 5,
-		"format-wifi": "{icon} ",
+		"format-wifi": "{icon}",
 		"format-ethernet": "" ,
 		"format-disconnected": "",
 		"tooltip": true,
@@ -78,9 +78,9 @@
 	},
 
     "pulseaudio": {
-    "format": "{icon} ",
-    "format-bluetooth": " {icon} ",
-    "format-muted": "󰸈 ",
+    "format": "{icon}",
+    "format-bluetooth": " {icon}",
+    "format-muted": "󰸈",
     "format-icons": {
         "headphone": "",
         "hands-free": "",
