@@ -200,6 +200,8 @@
       teams
       deluge-gtk
       vimiv-qt
+	  protonmail-bridge
+	  evolution
     ];
   };
 

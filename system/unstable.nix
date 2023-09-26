@@ -7,5 +7,6 @@ in
   environment.systemPackages = with pkgs; [
     unstable.waybar
     unstable.nixd
+	unstable.mozillavpn
   ];
 }

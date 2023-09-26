@@ -61,8 +61,8 @@
 	"network": {
 		"interval": 5,
 		"format-wifi": "{icon}",
-		"format-ethernet": "" ,
-		"format-disconnected": "",
+		"format-ethernet": "󰌘" ,
+		"format-disconnected": "󰌙",
 		"tooltip": true,
 		"format-icons": [
             "󰤯", // Icon: battery-full
@@ -72,8 +72,9 @@
             "󰤨"  // Icon: battery-empty
         ],
 		"tooltip-format-wifi": "{essid} ({signalStrength}%) at {ipaddr}",
-		"tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}"
-
+		"tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+		"on-click": "nm-connection-editor",
+		"on-click-right": "if [[ $(nmcli radio wifi) == 'enabled' ]]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
 
 	},
 
