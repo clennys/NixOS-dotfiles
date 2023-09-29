@@ -8,5 +8,7 @@ in
     unstable.waybar
     unstable.nixd
 	unstable.mozillavpn
+	unstable.beeper
+	unstable.swaynotificationcenter
   ];
 }

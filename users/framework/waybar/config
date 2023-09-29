@@ -14,6 +14,7 @@
         "clock": {
         "format": "{:%a %Y-%m-%d %H:%M}",
 		"tooltip-format": "\n<span size='9pt' font='Fragment Mono'>{calendar}</span>",
+		"on-click": "swaync-client -t",
         "calendar": {
                     "mode"          : "year",
                     "mode-mon-col"  : 3,

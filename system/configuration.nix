@@ -105,6 +105,8 @@
     "/share/nix-direnv"
   ];
 
+  environment.localBinInPath = true;
+
   services.gnome.gnome-keyring.enable = true;
 
   hardware.bluetooth.enable = true;
@@ -195,6 +197,7 @@
       wdisplays
       sway-contrib.grimshot
       swaylock
+	  swayidle
       mpv
       vscode.fhs
       teams
@@ -238,6 +241,7 @@
 	ripgrep
 	qt5.qtwayland
 	tmux
+	fd
   ];
 
   services.fprintd = {
@@ -291,6 +295,11 @@ nix.gc = {
   dates = "weekly";
   options = "--delete-older-than 14d";
 };
+
+documentation.man = {
+    enable = true;
+    generateCaches = true;
+  };
 
 nix.settings.auto-optimise-store = true;
 
