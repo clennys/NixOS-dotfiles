@@ -205,6 +205,7 @@
       vimiv-qt
 	  protonmail-bridge
 	  evolution
+	  authy
     ];
   };
 
