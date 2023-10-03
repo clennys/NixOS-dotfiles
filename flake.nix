@@ -13,11 +13,14 @@
       lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
-        framework = lib.nixosSystem {
+        nuc = lib.nixosSystem {
           inherit system;
-          modules = [ ./system/configuration.nix ];
+          modules = [ ./system/nuc/configuration.nix ];
         };
-
+	framework = lib.nixosSystem {
+          inherit system;
+          modules = [ ./system/framework/configuration.nix ];
+        };
       };
     };
 }
