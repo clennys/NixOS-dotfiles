@@ -75,7 +75,6 @@ $container\
 $sudo\
 $jobs\
 $battery\
-$time\
 """
 
 add_newline = false
@@ -84,9 +83,9 @@ continuation_prompt = "▶▶"
 
 
 [character]
-success_symbol = "[>](bold green)" 
-error_symbol = "[>](bold red)"
-vicmd_symbol = "[<](bold blue)"
+success_symbol = "[󰥭](bold green)" 
+error_symbol = "[󰥭](bold red)"
+vicmd_symbol = "[󰥼](bold blue)"
 
 
 [directory]
@@ -104,10 +103,10 @@ style_user 	= "bold blue"
 
 [status]
 disabled = false
-symbol =""
+symbol =" "
 
 [jobs]
-symbol = "雷"
+symbol = " "
 style = "bold red"
 
 [time]
@@ -118,7 +117,7 @@ format = "[$time]($style)"
 show_notifications = true
 
 [python]
-symbol = " "
+symbol = " "
 
 [c]
 symbol = " "

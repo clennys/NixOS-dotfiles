@@ -48,39 +48,20 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
- /* services.xserver.desktopManager.gnome.enable = true;
 
-     	environment.gnome.excludePackages = (with pkgs; [
-    				gnome-photos
-    				gnome-tour
-    				]) ++ (with pkgs.gnome; [
-     					cheese # webcam tool
-     					gnome-music
-     					gnome-terminal
-     					gedit # text editor
-     					epiphany # web browser
-     					geary # email reader
-     					evince # document viewer
-     					gnome-characters
-     					totem # video player
-     					tali # poker game
-     					iagno # go game
-     					hitori # sudoku game
-     					atomix # puzzle game
-    				]);
-				*/
   programs.hyprland.enable = true;
 
   hardware.opengl.enable = true;
   hardware.opengl.extraPackages = with pkgs; [
     intel-media-driver
   ];
+
    services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
     HandlePowerKey=hibernate
   '';
 
-   programs.dconf.enable = true;
+  programs.dconf.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
@@ -101,6 +82,7 @@
     keep-outputs = true;
     keep-derivations = true;
   };
+
   environment.pathsToLink = [
     "/share/nix-direnv"
   ];
@@ -118,13 +100,6 @@
       auth include login
     '';
   };
-
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "dvorak-alt-intl";
-  };
-
 
   # Configure console keymap
   console.keyMap = "dvorak";
@@ -149,10 +124,8 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   programs.zsh.enable = true;
+  programs.direnv.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dhuber = {
@@ -161,12 +134,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      /* gnomeExtensions.vertical-workspaces
-      gnomeExtensions.pop-shell
-      gnomeExtensions.caffeine
-      gnome.gnome-tweaks
-      gnome.dconf-editor
-      */
       firefox
       alacritty
 	  kitty
@@ -180,7 +147,6 @@
       networkmanagerapplet
       signal-desktop
       spotify
-      zoxide
       wofi
       brave
       hyprpaper
@@ -200,11 +166,8 @@
 	  swayidle
       mpv
       vscode.fhs
-      teams
       deluge-gtk
       vimiv-qt
-	  protonmail-bridge
-	  evolution
 	  authy
     ];
   };
@@ -225,7 +188,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim 
     gitFull
     fprintd
     exa
@@ -236,13 +199,13 @@
     gnumake
     wget
     rsync
-    direnv
     nix-direnv 
     unzip
 	ripgrep
 	qt5.qtwayland
 	tmux
 	fd
+	zip
   ];
 
   services.fprintd = {
@@ -290,6 +253,28 @@
     '';
   };
 
+security.pam.services.login.fprintAuth = false;
+# similarly to how other distributions handle the fingerprinting login
+security.pam.services.gdm-fingerprint = pkgs.lib.mkIf (config.services.fprintd.enable) {
+      text = ''
+        auth       required                    pam_shells.so
+        auth       requisite                   pam_nologin.so
+        auth       requisite                   pam_faillock.so      preauth
+        auth       required                    ${pkgs.fprintd}/lib/security/pam_fprintd.so
+        auth       optional                    pam_permit.so
+        auth       required                    pam_env.so
+        auth       [success=ok default=1]      ${pkgs.gnome.gdm}/lib/security/pam_gdm.so
+        auth       optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so
+
+        account    include                     login
+
+        password   required                    pam_deny.so
+
+        session    include                     login
+        session    optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
+      '';
+    };
+
 
 nix.gc = {
   automatic = true;
@@ -303,15 +288,6 @@ documentation.man = {
   };
 
 nix.settings.auto-optimise-store = true;
-
-/*
-    xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk];
-    };
-    */
-
-
 
       # Some programs need SUID wrappers, can be configured further or are
       # started in user sessions.

@@ -1,9 +1,13 @@
 {
   description = "NixOS flake";
 
-  inputs = { nixpkgs.url = "nixpkgs/nixos-23.05"; };
+  inputs = { 
+	  nixpkgs.url = "nixpkgs/nixos-23.05"; 
+	  nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+      hyprland.url = "github:hyprwm/Hyprland";
+  };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, hyprland, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -19,7 +23,12 @@
         };
 	framework = lib.nixosSystem {
           inherit system;
-          modules = [ ./system/framework/configuration.nix ];
+          modules = [ ./system/framework/configuration.nix
+		          hyprland.nixosModules.default
+        {programs.hyprland.enable = true;}
+
+
+		  ];
         };
       };
     };
