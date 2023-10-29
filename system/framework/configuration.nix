@@ -44,10 +44,16 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver = {
+	enable = true;
+	displayManager = {
+		sddm.enable = true;
+		sddm.theme = "${import ./derv/sddm-theme.nix {inherit pkgs; }}";
+	};
+  };
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
 
   programs.hyprland.enable = true;
 
@@ -168,7 +174,7 @@
       vscode.fhs
       deluge-gtk
       vimiv-qt
-	  authy
+	  nix-prefetch-git
     ];
   };
 
@@ -202,10 +208,16 @@
     nix-direnv 
     unzip
 	ripgrep
-	qt5.qtwayland
+	qt6.qtwayland
+	libsForQt5.qt5.qtwayland
 	tmux
 	fd
 	zip
+	libsForQt5.qt5.qtquickcontrols2
+	libsForQt5.qt5.qtgraphicaleffects
+	libsForQt5.qt5.qtsvg
+	wl-clipboard
+	swappy
   ];
 
   services.fprintd = {

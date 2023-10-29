@@ -9,6 +9,6 @@ in
     unstable.nixd
 	unstable.beeper
 	unstable.swaynotificationcenter
-	unstable.hyprland
+	unstable.protonvpn-gui
   ];
 }
