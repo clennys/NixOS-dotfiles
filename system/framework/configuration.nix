@@ -46,9 +46,14 @@
   # Enable the X11 windowing system.
   services.xserver = {
 	enable = true;
+	layout = "us";    
+	xkbVariant = "dvorak-alt-intl";
+
 	displayManager = {
-		sddm.enable = true;
-		sddm.theme = "${import ./derv/sddm-theme.nix {inherit pkgs; }}";
+		sddm = {
+			enable = true;
+			theme = "${import ./derv/sddm-theme.nix {inherit pkgs; }}";
+		};
 	};
   };
 
@@ -101,11 +106,14 @@
   services.blueman.enable = true;
   services.fwupd.enable = true;
 
-  security.pam.services.swaylock = {
-    text = ''
-      auth include login
-    '';
+  security.pam.services = {
+	swaylock = {
+		text = ''
+		  auth include login
+		'';
+	};
   };
+
 
   # Configure console keymap
   console.keyMap = "dvorak";
@@ -150,6 +158,7 @@
       starship
       neovim
       gnome.networkmanager-vpnc
+	  celluloid
       networkmanagerapplet
       signal-desktop
       spotify
@@ -175,6 +184,9 @@
       deluge-gtk
       vimiv-qt
 	  nix-prefetch-git
+	  pnmixer
+	  volumeicon
+	  usbutils
     ];
   };
 
@@ -182,6 +194,7 @@
 
   fonts.fonts = with pkgs; [
     noto-fonts
+	terminus_font
     terminus-nerdfont
     cantarell-fonts
     font-awesome
@@ -286,6 +299,10 @@ security.pam.services.gdm-fingerprint = pkgs.lib.mkIf (config.services.fprintd.e
         session    optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
       '';
     };
+
+
+
+services.gvfs.enable = true; # Mount mtp devices (Phones) for pcmanfm
 
 
 nix.gc = {
