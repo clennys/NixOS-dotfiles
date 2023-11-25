@@ -158,6 +158,7 @@
       starship
       neovim
       gnome.networkmanager-vpnc
+	  networkmanager-openvpn
 	  celluloid
       networkmanagerapplet
       signal-desktop
@@ -198,6 +199,7 @@
     terminus-nerdfont
     cantarell-fonts
     font-awesome
+	(import ./derv/intel-one-mono-nerd-font.nix {inherit lib stdenvNoCC fetchurl unzip;})
   ];
 
   # Allow unfree packages
