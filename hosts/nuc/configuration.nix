@@ -8,7 +8,7 @@
   imports =
     [
       # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ./hardware/hardware-configuration.nix
       ./unstable.nix
     ];
 
@@ -16,18 +16,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Enable swap on luks
-  boot.initrd.luks.devices."luks-c3e3bc23-3e5e-4e19-8042-5b4750ee20ab".device = "/dev/disk/by-uuid/c3e3bc23-3e5e-4e19-8042-5b4750ee20ab";
-  boot.initrd.luks.devices."luks-c3e3bc23-3e5e-4e19-8042-5b4750ee20ab".keyFile = "/crypto_keyfile.bin";
-
-  networking.hostName = "framework"; # Define your hostname.
+  networking.hostName = "nuc-homelab"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -44,35 +35,43 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Enable the X11 windowing system.
-  services.xserver = {
-	enable = true;
-	layout = "us";    
-	xkbVariant = "dvorak-alt-intl";
-
-	displayManager = {
-		sddm = {
-			enable = true;
-			theme = "${import ./derv/sddm-theme.nix {inherit pkgs; }}";
-		};
-	};
-  };
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+ /* services.xserver.desktopManager.gnome.enable = true;
 
+     	environment.gnome.excludePackages = (with pkgs; [
+    				gnome-photos
+    				gnome-tour
+    				]) ++ (with pkgs.gnome; [
+     					cheese # webcam tool
+     					gnome-music
+     					gnome-terminal
+     					gedit # text editor
+     					epiphany # web browser
+     					geary # email reader
+     					evince # document viewer
+     					gnome-characters
+     					totem # video player
+     					tali # poker game
+     					iagno # go game
+     					hitori # sudoku game
+     					atomix # puzzle game
+    				]);
+				*/
   programs.hyprland.enable = true;
 
   hardware.opengl.enable = true;
   hardware.opengl.extraPackages = with pkgs; [
     intel-media-driver
   ];
-
    services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
     HandlePowerKey=hibernate
   '';
 
-  programs.dconf.enable = true;
+   programs.dconf.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
@@ -93,7 +92,6 @@
     keep-outputs = true;
     keep-derivations = true;
   };
-
   environment.pathsToLink = [
     "/share/nix-direnv"
   ];
@@ -106,12 +104,16 @@
   services.blueman.enable = true;
   services.fwupd.enable = true;
 
-  security.pam.services = {
-	swaylock = {
-		text = ''
-		  auth include login
-		'';
-	};
+  security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
+  };
+
+  # Configure keymap in X11
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "dvorak-alt-intl";
   };
 
 
@@ -138,8 +140,10 @@
     #media-session.enable = true;
   };
 
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
   programs.zsh.enable = true;
-  programs.direnv.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dhuber = {
@@ -148,6 +152,12 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
+      /* gnomeExtensions.vertical-workspaces
+      gnomeExtensions.pop-shell
+      gnomeExtensions.caffeine
+      gnome.gnome-tweaks
+      gnome.dconf-editor
+      */
       firefox
       alacritty
 	  kitty
@@ -158,11 +168,10 @@
       starship
       neovim
       gnome.networkmanager-vpnc
-	  networkmanager-openvpn
-	  celluloid
       networkmanagerapplet
       signal-desktop
       spotify
+      zoxide
       wofi
       brave
       hyprpaper
@@ -182,12 +191,12 @@
 	  swayidle
       mpv
       vscode.fhs
+      # teams
       deluge-gtk
       vimiv-qt
-	  nix-prefetch-git
-	  pnmixer
-	  volumeicon
-	  usbutils
+	  protonmail-bridge
+	  evolution
+	  authy
     ];
   };
 
@@ -195,11 +204,9 @@
 
   fonts.fonts = with pkgs; [
     noto-fonts
-	terminus_font
     terminus-nerdfont
     cantarell-fonts
     font-awesome
-	(import ./derv/intel-one-mono-nerd-font.nix {inherit lib stdenvNoCC fetchurl unzip;})
   ];
 
   # Allow unfree packages
@@ -209,7 +216,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     gitFull
     fprintd
     exa
@@ -220,19 +227,13 @@
     gnumake
     wget
     rsync
+    direnv
     nix-direnv 
     unzip
 	ripgrep
-	qt6.qtwayland
-	libsForQt5.qt5.qtwayland
+	qt5.qtwayland
 	tmux
 	fd
-	zip
-	libsForQt5.qt5.qtquickcontrols2
-	libsForQt5.qt5.qtgraphicaleffects
-	libsForQt5.qt5.qtsvg
-	wl-clipboard
-	swappy
   ];
 
   services.fprintd = {
@@ -280,32 +281,6 @@
     '';
   };
 
-security.pam.services.login.fprintAuth = false;
-# similarly to how other distributions handle the fingerprinting login
-security.pam.services.gdm-fingerprint = pkgs.lib.mkIf (config.services.fprintd.enable) {
-      text = ''
-        auth       required                    pam_shells.so
-        auth       requisite                   pam_nologin.so
-        auth       requisite                   pam_faillock.so      preauth
-        auth       required                    ${pkgs.fprintd}/lib/security/pam_fprintd.so
-        auth       optional                    pam_permit.so
-        auth       required                    pam_env.so
-        auth       [success=ok default=1]      ${pkgs.gnome.gdm}/lib/security/pam_gdm.so
-        auth       optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so
-
-        account    include                     login
-
-        password   required                    pam_deny.so
-
-        session    include                     login
-        session    optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
-      '';
-    };
-
-
-
-services.gvfs.enable = true; # Mount mtp devices (Phones) for pcmanfm
-
 
 nix.gc = {
   automatic = true;
@@ -319,6 +294,15 @@ documentation.man = {
   };
 
 nix.settings.auto-optimise-store = true;
+
+/*
+    xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk];
+    };
+    */
+
+
 
       # Some programs need SUID wrappers, can be configured further or are
       # started in user sessions.

@@ -5,6 +5,9 @@
   imports = [
     # ./git # looks for ./git/defualt.nix
     # ./hypr/hyprland.nix # looks for ./hypr/hyprland.nix
+	../../modules/zsh
+	../../modules/starship
+	../../modules/fzf
    ];
     
   # The User and Path it manages

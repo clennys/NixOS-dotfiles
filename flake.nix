@@ -23,7 +23,7 @@
       nixosConfigurations = {
         nuc = lib.nixosSystem {
           inherit system;
-          modules = [ ./system/nuc/configuration.nix 
+          modules = [ ./hosts/nuc/configuration.nix 
             hyprland.nixosModules.default
             { programs.hyprland.enable = true; }
 			home-manager.nixosModules.home-manager
@@ -39,7 +39,7 @@
         framework = lib.nixosSystem {
           inherit system;
           modules = [
-            ./system/framework/configuration.nix
+            ./hosts/framework/configuration.nix
             hyprland.nixosModules.default
             { programs.hyprland.enable = true; }
 			home-manager.nixosModules.home-manager

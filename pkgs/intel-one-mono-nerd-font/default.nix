@@ -7,7 +7,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   srcs = [
     (fetchurl {
       url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v${finalAttrs.version}/IntelOneMono.zip";
-      hash = "sha256-1j0rj4l919jk8yrny4yakk0yrn9mkdhkf6hqs6kk13sdm466gw9l";
+      hash = "sha256-NPFnDKlNjzCn0RgaN2GbNdnswZzKE2+zR1OmkCiRGcg=";
     })
   ];
 
@@ -19,7 +19,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   installPhase = ''
     runHook preInstall
-    install -Dm644 -t $out/share/fonts/truetype/ ttf/*.ttf
+    install -Dm644 -t $out/share/fonts/truetype/ *.ttf
     runHook postInstall
   '';
 })
