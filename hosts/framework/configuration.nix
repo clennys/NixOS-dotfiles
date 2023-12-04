@@ -9,7 +9,6 @@
     [
       # Include the results of the hardware scan.
       ./hardware/hardware-configuration.nix
-      ./unstable.nix
     ];
 
   # Bootloader.
@@ -52,6 +51,7 @@
 	displayManager = {
 		sddm = {
 			enable = true;
+			wayland.enable = true;
 			theme = "${import ../../pkgs/sddm-theme {inherit pkgs; }}";
 		};
 	};
@@ -189,12 +189,16 @@
 	  pnmixer
 	  volumeicon
 	  usbutils
+	  beeper
+	  nixd
+	  swaynotificationcenter
+	  waybar
     ];
   };
 
 
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     noto-fonts
 	terminus_font
     terminus-nerdfont
@@ -208,13 +212,15 @@
   nixpkgs.config.allowUnfree = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  # xdg.portal.configPackages = [pkgs.xdg-desktop-portal-hyprland];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim 
     gitFull
     fprintd
-    exa
+    eza
     fzf
     neofetch
     pulseaudio
@@ -235,6 +241,7 @@
 	libsForQt5.qt5.qtsvg
 	wl-clipboard
 	swappy
+	imagemagick
   ];
 
   services.fprintd = {
@@ -308,6 +315,7 @@ security.pam.services.gdm-fingerprint = pkgs.lib.mkIf (config.services.fprintd.e
 
 services.gvfs.enable = true; # Mount mtp devices (Phones) for pcmanfm
 
+xdg.portal.config.common.default = "*";
 
 nix.gc = {
   automatic = true;
@@ -347,6 +355,6 @@ nix.settings.auto-optimise-store = true;
       # this value at the release version of the first install of this system.
       # Before changing this value read the documentation for this option
       # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-      system.stateVersion = "23.05"; # Did you read the comment?
+      system.stateVersion = "23.11"; # Did you read the comment?
 
 }

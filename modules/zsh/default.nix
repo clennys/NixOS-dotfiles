@@ -9,14 +9,14 @@
 		dotDir = ".config/zsh";
 		defaultKeymap = "viins";
 
-		# syntaxHighlighting = {
-		# 	enable = true;
+		syntaxHighlighting = {
+			enable = true;
 		# 	package = pkgs.zsh-syntax-highlighting;
 		# 	styles = {
 		# 		"builtin" = "fg=blue";
 		# 		"command" = "fg=green";
 		# 	};
-		# };
+		};
 
 		history = {
 			extended = true;
@@ -35,6 +35,7 @@
 		};
 
 		initExtra = ''
+		zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 		# >>> conda initialize >>>
 			__conda_setup="$('/home/dhuber/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 			if [ $? -eq 0 ]; then
@@ -54,11 +55,21 @@
 			# enable = true;
 		# };
 
+		oh-my-zsh = {
+			enable = true;
+			plugins = [
+			"fzf"
+			"git"
+			];
+		};
+
 	};
 
 	home.sessionVariables = {
-			FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS' --color=dark --color=fg:#eaebed,bg:-1,hl:#bf616a,fg+:#eaebed,bg+:-1,hl+:#ebcb8b --color=info:#a3be8c,prompt:#81a1c1,pointer:#bf616a,marker:#ebcb8b,spinner:#96b4b5,header:#81a1c1'";
+			# FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS' --color=dark --color=fg:#eaebed,bg:-1,hl:#bf616a,fg+:#eaebed,bg+:-1,hl+:#ebcb8b --color=info:#a3be8c,prompt:#81a1c1,pointer:#bf616a,marker:#ebcb8b,spinner:#96b4b5,header:#81a1c1'";
 			GOPATH="$HOME/go";
-		  };
+	};
+
+
 
 }

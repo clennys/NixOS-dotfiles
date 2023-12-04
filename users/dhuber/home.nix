@@ -8,6 +8,7 @@
 	../../modules/zsh
 	../../modules/starship
 	../../modules/fzf
+	../../modules/alacritty
    ];
     
   # The User and Path it manages
@@ -47,7 +48,8 @@
 
   qt = {
 	  enable = true;
-	  platformTheme = "gtk";
+	  platformTheme = "gnome";
+	  style.package = pkgs.adwaita-qt;
 	  style.name = "adwaita";
   };
 
@@ -72,5 +74,5 @@
   };
 
 
-  home.stateVersion = "23.05";
+  home.stateVersion = "23.11";
 }
