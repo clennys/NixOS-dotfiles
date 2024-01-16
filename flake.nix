@@ -9,13 +9,21 @@
 		url = "github:nix-community/home-manager/release-23.11";
 		inputs.nixpkgs.follows = "nixpkgs";
 	};
+	split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
+	neovim-nightly-overlay = {
+		url = "github:nix-community/neovim-nightly-overlay";
+	};
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, hyprland, home-manager, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, hyprland, home-manager, split-monitor-workspaces, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
+		overlays = [inputs.neovim-nightly-overlay.overlay];
         config = { allowUnfree = true; };
       };
       lib = nixpkgs.lib;

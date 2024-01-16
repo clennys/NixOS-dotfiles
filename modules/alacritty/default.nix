@@ -13,22 +13,22 @@
       };
       font = {
         normal = {
-          family = "IntelOne Mono";
+          family = "Terminess Nerd Font";
           style = "Regular";
         };
         bold = {
-          family = "IntelOne Mono";
-          style = "Medium";
+          family = "Terminess Nerd Font";
+          style = "Bold";
         };
         italic = {
-          family = "IntelOne Mono";
+          family = "Terminess Nerd Font";
           style = "Italic";
         };
         bold_italic = {
-          family = "IntelOne Mono";
-          style = "Medium Italic";
+          family = "Terminess Nerd Font";
+          style = "Bold Italic";
         };
-        size = 13;
+        size = 16;
       };
 
       colors = {
@@ -51,12 +51,12 @@
 
         bright = {
           black = "#697884";
-          red = "#bf616a";
-          green = "#a3be8c";
-          yellow = "#D08770";
+          red = "#C5727A";
+          green = "#B1C89d";
+          yellow = "#EFD49F";
           blue = "#5e81ac";
-          magenta = "#b48ead";
-          cyan = "#96b5b4";
+          magenta = "#BE9DB8";
+          cyan = "#9FC6C5";
           white = "#d8dee9";
         };
       };

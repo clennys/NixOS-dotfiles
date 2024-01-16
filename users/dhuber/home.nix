@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ config, pkgs, split-monitor-workspaces, ...}:
 
 {
   # if you config gets too long, split it up into smaller modules
@@ -17,13 +17,16 @@
   
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
-  
+
   # List of user programs
   home.packages = with pkgs; [
 	home-manager
     zsh
     git
     firefox
+    lazygit
+    neovim
+	# neovim-nightly
   ];
 
   gtk = {
@@ -71,6 +74,10 @@
 			"image/jpeg" = ["vimiv.desktop" "firefox.desktop" "brave.desktop"];
 			"image/webp" = ["firefox.desktop" "brave.desktop"];
 		};
+  };
+
+  wayland.windowManager.hyprland = {
+	plugins = [split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces];
   };
 
 

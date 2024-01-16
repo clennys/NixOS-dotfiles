@@ -166,7 +166,7 @@
       zotero
       okular
       starship
-      neovim
+      # neovim
       gnome.networkmanager-vpnc
       networkmanagerapplet
       signal-desktop

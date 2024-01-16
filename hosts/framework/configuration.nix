@@ -157,7 +157,7 @@
       zotero
       okular
       starship
-      neovim
+      # neovim
       gnome.networkmanager-vpnc
 	  networkmanager-openvpn
 	  celluloid
@@ -193,6 +193,8 @@
 	  nixd
 	  swaynotificationcenter
 	  waybar
+	  foliate
+	  btop
     ];
   };
 
@@ -242,6 +244,8 @@
 	wl-clipboard
 	swappy
 	imagemagick
+	bc
+	nurl
   ];
 
   services.fprintd = {
