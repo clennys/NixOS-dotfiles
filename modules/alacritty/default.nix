@@ -1,15 +1,13 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.alacritty = {
     enable = true;
     settings = {
       window = {
-		 padding = {
-        x = 10;
-        y = 10;
-		 };
-		  opacity = 0.85;
+        padding = {
+          x = 10;
+          y = 10;
+        };
+        opacity = 0.85;
       };
       font = {
         normal = {
@@ -35,7 +33,6 @@
         primary = {
           background = "#1c2023";
           foreground = "#eaebed";
-
         };
 
         normal = {
@@ -60,9 +57,9 @@
           white = "#d8dee9";
         };
       };
-	  cursor = {
-		  style = "underline";
-	  };
+      cursor = {
+        style = "underline";
+      };
     };
   };
 }

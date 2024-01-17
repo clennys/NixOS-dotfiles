@@ -1,22 +1,22 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware/hardware-configuration.nix
-      ./unstable.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware/hardware-configuration.nix
+    ./unstable.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.hostName = "nuc-homelab"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -39,45 +39,44 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
- /* services.xserver.desktopManager.gnome.enable = true;
+  /*
+  services.xserver.desktopManager.gnome.enable = true;
 
-     	environment.gnome.excludePackages = (with pkgs; [
-    				gnome-photos
-    				gnome-tour
-    				]) ++ (with pkgs.gnome; [
-     					cheese # webcam tool
-     					gnome-music
-     					gnome-terminal
-     					gedit # text editor
-     					epiphany # web browser
-     					geary # email reader
-     					evince # document viewer
-     					gnome-characters
-     					totem # video player
-     					tali # poker game
-     					iagno # go game
-     					hitori # sudoku game
-     					atomix # puzzle game
-    				]);
-				*/
+   	environment.gnome.excludePackages = (with pkgs; [
+  				gnome-photos
+  				gnome-tour
+  				]) ++ (with pkgs.gnome; [
+   					cheese # webcam tool
+   					gnome-music
+   					gnome-terminal
+   					gedit # text editor
+   					epiphany # web browser
+   					geary # email reader
+   					evince # document viewer
+   					gnome-characters
+   					totem # video player
+   					tali # poker game
+   					iagno # go game
+   					hitori # sudoku game
+   					atomix # puzzle game
+  				]);
+  */
   programs.hyprland.enable = true;
 
   hardware.opengl.enable = true;
-  hardware.opengl.extraPackages = with pkgs; [
-    intel-media-driver
-  ];
-   services.logind.extraConfig = ''
+  hardware.opengl.extraPackages = with pkgs; [intel-media-driver];
+  services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
     HandlePowerKey=hibernate
   '';
 
-   programs.dconf.enable = true;
+  programs.dconf.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -92,9 +91,7 @@
     keep-outputs = true;
     keep-derivations = true;
   };
-  environment.pathsToLink = [
-    "/share/nix-direnv"
-  ];
+  environment.pathsToLink = ["/share/nix-direnv"];
 
   environment.localBinInPath = true;
 
@@ -115,7 +112,6 @@
     layout = "us";
     xkbVariant = "dvorak-alt-intl";
   };
-
 
   # Configure console keymap
   console.keyMap = "dvorak";
@@ -149,10 +145,11 @@
   users.users.dhuber = {
     isNormalUser = true;
     description = "Dennys Huber";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      /* gnomeExtensions.vertical-workspaces
+      /*
+      gnomeExtensions.vertical-workspaces
       gnomeExtensions.pop-shell
       gnomeExtensions.caffeine
       gnome.gnome-tweaks
@@ -160,7 +157,7 @@
       */
       firefox
       alacritty
-	  kitty
+      kitty
       pcmanfm
       nextcloud-client
       zotero
@@ -178,7 +175,7 @@
       hyprpicker
       dunst
       xdg-desktop-portal-hyprland
-	  nixfmt
+      nixfmt
       hyprland-protocols
       gnome.gnome-keyring
       polkit_gnome
@@ -188,19 +185,17 @@
       wdisplays
       sway-contrib.grimshot
       swaylock
-	  swayidle
+      swayidle
       mpv
       vscode.fhs
       # teams
       deluge-gtk
       vimiv-qt
-	  protonmail-bridge
-	  evolution
-	  authy
+      protonmail-bridge
+      evolution
+      authy
     ];
   };
-
-
 
   fonts.fonts = with pkgs; [
     noto-fonts
@@ -228,107 +223,96 @@
     wget
     rsync
     direnv
-    nix-direnv 
+    nix-direnv
     unzip
-	ripgrep
-	qt5.qtwayland
-	tmux
-	fd
+    ripgrep
+    qt5.qtwayland
+    tmux
+    fd
   ];
 
-  services.fprintd = {
-    enable = true;
-  };
+  services.fprintd = {enable = true;};
 
   services.tlp.enable = true;
-  powerManagement =
-    {
-      enable = true;
-    };
+  powerManagement = {enable = true;};
 
- programs.tmux = {
+  programs.tmux = {
     enable = true;
     shortcut = "a";
     baseIndex = 1;
     newSession = true;
-	clock24 = true;
-	keyMode = "vi";
+    clock24 = true;
+    keyMode = "vi";
 
     # Stop tmux+escape craziness.
     escapeTime = 0;
 
-	plugins = with pkgs; [
-		tmuxPlugins.resurrect
-    ];
+    plugins = with pkgs; [tmuxPlugins.resurrect];
 
     extraConfig = ''
-		set -g history-limit 20000
+      set -g history-limit 20000
 
-		bind s split-window -v
-		bind v split-window -h
-		bind t new-window -c '#{pane_current_path}'
-		bind r command-prompt -I '#S' 'rename-session "%%"'
+      bind s split-window -v
+      bind v split-window -h
+      bind t new-window -c '#{pane_current_path}'
+      bind r command-prompt -I '#S' 'rename-session "%%"'
 
-		# Enable mouse control (clickable windows, panes, resizable panes)
-		set -g mouse on
+      # Enable mouse control (clickable windows, panes, resizable panes)
+      set -g mouse on
 
-		set-option -g status-style "bg=default, fg=blue"
+      set-option -g status-style "bg=default, fg=blue"
 
-		setw -g window-status-format ' #I:#W '
-		setw -g window-status-current-format ' #I:[#W] '
-		set-option -g status-left "[#S]"
-		set -g status-right "%Y-%m-%d %H:%M #H"
+      setw -g window-status-format ' #I:#W '
+      setw -g window-status-current-format ' #I:[#W] '
+      set-option -g status-left "[#S]"
+      set -g status-right "%Y-%m-%d %H:%M #H"
     '';
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
 
-nix.gc = {
-  automatic = true;
-  dates = "weekly";
-  options = "--delete-older-than 14d";
-};
-
-documentation.man = {
+  documentation.man = {
     enable = true;
     generateCaches = true;
   };
 
-nix.settings.auto-optimise-store = true;
+  nix.settings.auto-optimise-store = true;
 
-/*
-    xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk];
-    };
-    */
+  /*
+  xdg.portal = {
+  enable = true;
+  extraPortals = [ pkgs.xdg-desktop-portal-gtk];
+  };
+  */
 
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
+  # List services that you want to enable:
 
-      # Some programs need SUID wrappers, can be configured further or are
-      # started in user sessions.
-      # programs.mtr.enable = true;
-      # programs.gnupg.agent = {
-      #   enable = true;
-      #   enableSSHSupport = true;
-      # };
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
-      # List services that you want to enable:
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewallallowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-      # Enable the OpenSSH daemon.
-      # services.openssh.enable = true;
-
-      # Open ports in the firewall.
-      # networking.firewall.allowedTCPPorts = [ ... ];
-      # networking.firewallallowedUDPPorts = [ ... ];
-      # Or disable the firewall altogether.
-      # networking.firewall.enable = false;
-
-      # This value determines the NixOS release from which the default
-      # settings for stateful data, like file locations and database versions
-      # on your system were taken. It‘s perfectly fine and recommended to leave
-      # this value at the release version of the first install of this system.
-      # Before changing this value read the documentation for this option
-      # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-      system.stateVersion = "23.05"; # Did you read the comment?
-
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.05"; # Did you read the comment?
 }

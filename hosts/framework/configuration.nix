@@ -1,15 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware/hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware/hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -20,7 +20,7 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Enable swap on luks
   boot.initrd.luks.devices."luks-c3e3bc23-3e5e-4e19-8042-5b4750ee20ab".device = "/dev/disk/by-uuid/c3e3bc23-3e5e-4e19-8042-5b4750ee20ab";
@@ -44,17 +44,17 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-	enable = true;
-	layout = "us";    
-	xkbVariant = "dvorak-alt-intl";
+    enable = true;
+    layout = "us";
+    xkbVariant = "dvorak-alt-intl";
 
-	displayManager = {
-		sddm = {
-			enable = true;
-			wayland.enable = true;
-			theme = "${import ../../pkgs/sddm-theme {inherit pkgs; }}";
-		};
-	};
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+        theme = "${import ../../pkgs/sddm-theme {inherit pkgs;}}";
+      };
+    };
   };
 
   # Enable the GNOME Desktop Environment.
@@ -67,19 +67,19 @@
     intel-media-driver
   ];
 
-   services.logind.extraConfig = ''
-    # don’t shutdown when power button is short-pressed
-    HandlePowerKey=hibernate
-	HandlePowerKeyLongPress=reboot
+  services.logind.extraConfig = ''
+       # don’t shutdown when power button is short-pressed
+       HandlePowerKey=hibernate
+    HandlePowerKeyLongPress=reboot
   '';
 
   programs.dconf.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -108,13 +108,12 @@
   services.fwupd.enable = true;
 
   security.pam.services = {
-	swaylock = {
-		text = ''
-		  auth include login
-		'';
-	};
+    swaylock = {
+      text = ''
+        auth include login
+      '';
+    };
   };
-
 
   # Configure console keymap
   console.keyMap = "dvorak";
@@ -146,12 +145,12 @@
   users.users.dhuber = {
     isNormalUser = true;
     description = "Dennys Huber";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
       alacritty
-	  kitty
+      kitty
       pcmanfm
       nextcloud-client
       zotero
@@ -159,8 +158,8 @@
       starship
       # neovim
       gnome.networkmanager-vpnc
-	  networkmanager-openvpn
-	  celluloid
+      networkmanager-openvpn
+      celluloid
       networkmanagerapplet
       signal-desktop
       spotify
@@ -170,7 +169,7 @@
       hyprpicker
       dunst
       xdg-desktop-portal-hyprland
-	  nixfmt
+      nixfmt
       hyprland-protocols
       gnome.gnome-keyring
       polkit_gnome
@@ -180,34 +179,32 @@
       wdisplays
       sway-contrib.grimshot
       swaylock
-	  swayidle
+      swayidle
       mpv
       vscode.fhs
       deluge-gtk
       vimiv-qt
-	  nix-prefetch-git
-	  pnmixer
-	  volumeicon
-	  usbutils
-	  beeper
-	  nixd
-	  swaynotificationcenter
-	  waybar
-	  foliate
-	  btop
+      nix-prefetch-git
+      pnmixer
+      volumeicon
+      usbutils
+      beeper
+      nixd
+      swaynotificationcenter
+      waybar
+      foliate
+      btop
     ];
   };
 
-
-
   fonts.packages = with pkgs; [
     noto-fonts
-	terminus_font
+    terminus_font
     terminus-nerdfont
     cantarell-fonts
     font-awesome
-	intel-one-mono
-	(import ../../pkgs/intel-one-mono-nerd-font {inherit lib stdenvNoCC fetchurl unzip;})
+    intel-one-mono
+    (import ../../pkgs/intel-one-mono-nerd-font {inherit lib stdenvNoCC fetchurl unzip;})
   ];
 
   # Allow unfree packages
@@ -219,7 +216,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     gitFull
     fprintd
     eza
@@ -230,22 +227,23 @@
     gnumake
     wget
     rsync
-    nix-direnv 
+    nix-direnv
     unzip
-	ripgrep
-	qt6.qtwayland
-	libsForQt5.qt5.qtwayland
-	tmux
-	fd
-	zip
-	libsForQt5.qt5.qtquickcontrols2
-	libsForQt5.qt5.qtgraphicaleffects
-	libsForQt5.qt5.qtsvg
-	wl-clipboard
-	swappy
-	imagemagick
-	bc
-	nurl
+    ripgrep
+    qt6.qtwayland
+    libsForQt5.qt5.qtwayland
+    tmux
+    fd
+    zip
+    libsForQt5.qt5.qtquickcontrols2
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtsvg
+    wl-clipboard
+    swappy
+    imagemagick
+    bc
+    nurl
+    alejandra
   ];
 
   services.fprintd = {
@@ -253,112 +251,108 @@
   };
 
   services.tlp.enable = true;
-  powerManagement =
-    {
-      enable = true;
-    };
+  powerManagement = {
+    enable = true;
+  };
 
- programs.tmux = {
+  programs.tmux = {
     enable = true;
     shortcut = "a";
     baseIndex = 1;
     newSession = true;
-	clock24 = true;
-	keyMode = "vi";
+    clock24 = true;
+    keyMode = "vi";
 
     # Stop tmux+escape craziness.
     escapeTime = 0;
 
-	plugins = with pkgs; [
-		tmuxPlugins.resurrect
+    plugins = with pkgs; [
+      tmuxPlugins.resurrect
     ];
 
     extraConfig = ''
-		set -g history-limit 20000
+      set -g history-limit 20000
 
-		bind s split-window -v
-		bind v split-window -h
-		bind t new-window -c '#{pane_current_path}'
-		bind r command-prompt -I '#S' 'rename-session "%%"'
+      bind s split-window -v
+      bind v split-window -h
+      bind t new-window -c '#{pane_current_path}'
+      bind r command-prompt -I '#S' 'rename-session "%%"'
 
-		# Enable mouse control (clickable windows, panes, resizable panes)
-		set -g mouse on
+      # Enable mouse control (clickable windows, panes, resizable panes)
+      set -g mouse on
 
-		set-option -g status-style "bg=default, fg=blue"
+      set-option -g status-style "bg=default, fg=blue"
 
-		setw -g window-status-format ' #I:#W '
-		setw -g window-status-current-format ' #I:[#W] '
-		set-option -g status-left "[#S]"
-		set -g status-right "%Y-%m-%d %H:%M #H"
+      setw -g window-status-format ' #I:#W '
+      setw -g window-status-current-format ' #I:[#W] '
+      set-option -g status-left "[#S]"
+      set -g status-right "%Y-%m-%d %H:%M #H"
     '';
   };
 
-security.pam.services.login.fprintAuth = false;
-# similarly to how other distributions handle the fingerprinting login
-security.pam.services.gdm-fingerprint = pkgs.lib.mkIf (config.services.fprintd.enable) {
-      text = ''
-        auth       required                    pam_shells.so
-        auth       requisite                   pam_nologin.so
-        auth       requisite                   pam_faillock.so      preauth
-        auth       required                    ${pkgs.fprintd}/lib/security/pam_fprintd.so
-        auth       optional                    pam_permit.so
-        auth       required                    pam_env.so
-        auth       [success=ok default=1]      ${pkgs.gnome.gdm}/lib/security/pam_gdm.so
-        auth       optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so
+  security.pam.services.login.fprintAuth = false;
+  # similarly to how other distributions handle the fingerprinting login
+  security.pam.services.gdm-fingerprint = pkgs.lib.mkIf (config.services.fprintd.enable) {
+    text = ''
+      auth       required                    pam_shells.so
+      auth       requisite                   pam_nologin.so
+      auth       requisite                   pam_faillock.so      preauth
+      auth       required                    ${pkgs.fprintd}/lib/security/pam_fprintd.so
+      auth       optional                    pam_permit.so
+      auth       required                    pam_env.so
+      auth       [success=ok default=1]      ${pkgs.gnome.gdm}/lib/security/pam_gdm.so
+      auth       optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so
 
-        account    include                     login
+      account    include                     login
 
-        password   required                    pam_deny.so
+      password   required                    pam_deny.so
 
-        session    include                     login
-        session    optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
-      '';
-    };
+      session    include                     login
+      session    optional                    ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
+    '';
+  };
 
+  services.gvfs.enable = true; # Mount mtp devices (Phones) for pcmanfm
 
+  xdg.portal.config.common.default = "*";
 
-services.gvfs.enable = true; # Mount mtp devices (Phones) for pcmanfm
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
 
-xdg.portal.config.common.default = "*";
-
-nix.gc = {
-  automatic = true;
-  dates = "weekly";
-  options = "--delete-older-than 14d";
-};
-
-documentation.man = {
+  documentation.man = {
     enable = true;
     generateCaches = true;
   };
 
-nix.settings.auto-optimise-store = true;
+  nix.settings.auto-optimise-store = true;
 
-      # Some programs need SUID wrappers, can be configured further or are
-      # started in user sessions.
-      # programs.mtr.enable = true;
-      # programs.gnupg.agent = {
-      #   enable = true;
-      #   enableSSHSupport = true;
-      # };
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
-      # List services that you want to enable:
+  # List services that you want to enable:
 
-      # Enable the OpenSSH daemon.
-      # services.openssh.enable = true;
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
-      # Open ports in the firewall.
-      # networking.firewall.allowedTCPPorts = [ ... ];
-      # networking.firewallallowedUDPPorts = [ ... ];
-      # Or disable the firewall altogether.
-      # networking.firewall.enable = false;
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewallallowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-      # This value determines the NixOS release from which the default
-      # settings for stateful data, like file locations and database versions
-      # on your system were taken. It‘s perfectly fine and recommended to leave
-      # this value at the release version of the first install of this system.
-      # Before changing this value read the documentation for this option
-      # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-      system.stateVersion = "23.11"; # Did you read the comment?
-
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.11"; # Did you read the comment?
 }
