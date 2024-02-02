@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.zsh = {
     enable = true;
 
@@ -16,7 +16,7 @@
       # 	};
     };
 
-    history = {extended = true;};
+    history = { extended = true; };
 
     shellAliases = {
       py = "python";
@@ -30,34 +30,47 @@
     };
 
     initExtra = ''
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-      # >>> conda initialize >>>
-      	__conda_setup="$('/home/dhuber/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-      	if [ $? -eq 0 ]; then
-      		eval "$__conda_setup"
-      	else
-      		if [ -f "/home/dhuber/.conda/etc/profile.d/conda.sh" ]; then
-      			. "/home/dhuber/.conda/etc/profile.d/conda.sh"
-      		else
-      			export PATH="/home/dhuber/.conda/bin:$PATH"
-      		fi
-      	fi
-      	unset __conda_setup
-      # <<< conda initialize <<<
+      zstyle ':completion:*:descriptions' format '%d'
+         zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+         # >>> conda initialize >>>
+         	__conda_setup="$('/home/dhuber/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+         	if [ $? -eq 0 ]; then
+         		eval "$__conda_setup"
+         	else
+         		if [ -f "/home/dhuber/.conda/etc/profile.d/conda.sh" ]; then
+         			. "/home/dhuber/.conda/etc/profile.d/conda.sh"
+         		else
+         			export PATH="/home/dhuber/.conda/bin:$PATH"
+         		fi
+         	fi
+         	unset __conda_setup
+         # <<< conda initialize <<<
     '';
-
-    # syntaxHighlighting = {
-    # enable = true;
-    # };
-
-    oh-my-zsh = {
-      enable = true;
-      plugins = ["fzf" "git"];
-    };
+    plugins = [{
+      name = "fzf-tab";
+      src = pkgs.fetchFromGitHub {
+        owner = "Aloxaf";
+        repo = "fzf-tab";
+        rev = "190500bf1de6a89416e2a74470d3b5cceab102ba";
+        sha256 = "1dipsy0s67fr47ig5559bcp1h5yn8rdjshhs8zsq7j8plvvh99qb";
+      };
+    }];
+  };
+  programs.fzf.colors = {
+    fg = "#eaebed";
+    hl = "#bf616a";
+    "fg+" = "#eaebed";
+    "hl+" = "#ebcb8b";
+    info = "#a3be8c";
+    prompt = "#81a1c1";
+    pointer = "#bf616a";
+    marker = "#ebcb8b";
+    spinner = "#96b4b5";
+    header = "#81a1c1";
   };
 
   home.sessionVariables = {
-    # FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS' --color=dark --color=fg:#eaebed,bg:-1,hl:#bf616a,fg+:#eaebed,bg+:-1,hl+:#ebcb8b --color=info:#a3be8c,prompt:#81a1c1,pointer:#bf616a,marker:#ebcb8b,spinner:#96b4b5,header:#81a1c1'";
+    # FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS' --color=dark
     GOPATH = "$HOME/go";
   };
 }

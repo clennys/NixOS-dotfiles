@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  split-monitor-workspaces,
-  ...
-}: {
+{ config, pkgs, unstable, split-monitor-workspaces, ... }: {
   # if you config gets too long, split it up into smaller modules
   imports = [
     # ./git # looks for ./git/defualt.nix
@@ -12,6 +7,7 @@
     ../../modules/starship
     ../../modules/fzf
     ../../modules/alacritty
+	../../modules/hypr
   ];
 
   # The User and Path it manages
@@ -22,15 +18,17 @@
   programs.home-manager.enable = true;
 
   # List of user programs
-  home.packages = with pkgs; [
-    home-manager
-    zsh
-    git
-    firefox
-    lazygit
-    neovim
-    # neovim-nightly
-  ];
+  home.packages = with pkgs;
+    [
+      home-manager
+      zsh
+      git
+      firefox
+      lazygit
+      # neovim
+      discord
+      # neovim-nightly
+    ] ++ [ unstable.beeper unstable.swayosd ];
 
   gtk = {
     enable = true;
@@ -61,27 +59,29 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "application/pdf" = ["org.kde.okular.desktop" "firefox.desktop"];
-      "x-scheme-handler/http" = ["firefox.desktop" "brave.desktop"];
-      "x-scheme-handler/https" = ["firefox.desktop" "brave.desktop"];
-      "x-scheme-handler/chrome" = ["firefox.desktop" "brave.desktop"];
-      "text/html" = ["firefox.desktop" "brave.desktop"];
-      "application/x-extension-htm" = ["firefox.desktop" "brave.desktop"];
-      "application/x-extension-html" = ["firefox.desktop" "brave.desktop"];
-      "application/x-extension-shtml" = ["firefox.desktop" "brave.desktop"];
-      "application/xhtml+xml" = ["firefox.desktop" "brave.desktop"];
-      "application/x-extension-xhtml" = ["firefox.desktop" "brave.desktop"];
-      "application/x-extension-xht" = ["firefox.desktop" "brave.desktop"];
-      "image/png" = ["vimiv.desktop" "firefox.desktop" "brave.desktop"];
-      "image/jpeg" = ["vimiv.desktop" "firefox.desktop" "brave.desktop"];
-      "image/webp" = ["firefox.desktop" "brave.desktop"];
+      "application/pdf" = [ "org.kde.okular.desktop" "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "firefox.desktop" "brave.desktop" ];
+      "x-scheme-handler/https" = [ "firefox.desktop" "brave.desktop" ];
+      "x-scheme-handler/chrome" = [ "firefox.desktop" "brave.desktop" ];
+      "text/html" = [ "firefox.desktop" "brave.desktop" ];
+      "application/x-extension-htm" = [ "firefox.desktop" "brave.desktop" ];
+      "application/x-extension-html" = [ "firefox.desktop" "brave.desktop" ];
+      "application/x-extension-shtml" = [ "firefox.desktop" "brave.desktop" ];
+      "application/xhtml+xml" = [ "firefox.desktop" "brave.desktop" ];
+      "application/x-extension-xhtml" = [ "firefox.desktop" "brave.desktop" ];
+      "application/x-extension-xht" = [ "firefox.desktop" "brave.desktop" ];
+      "image/png" = [ "vimiv.desktop" "firefox.desktop" "brave.desktop" ];
+      "image/jpeg" = [ "vimiv.desktop" "firefox.desktop" "brave.desktop" ];
+      "image/webp" = [ "firefox.desktop" "brave.desktop" ];
     };
   };
 
-  wayland.windowManager.hyprland = {
-    plugins = [
-      split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-    ];
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
   };
 
   home.stateVersion = "23.11";

@@ -188,12 +188,15 @@
       pnmixer
       volumeicon
       usbutils
-      beeper
+      # beeper
       nixd
       swaynotificationcenter
       waybar
       foliate
       btop
+	  # swayosd
+	  wl-mirror
+
     ];
   };
 
@@ -244,6 +247,8 @@
     bc
     nurl
     alejandra
+	ffmpeg
+	libnotify
   ];
 
   services.fprintd = {
@@ -287,6 +292,8 @@
       setw -g window-status-current-format ' #I:[#W] '
       set-option -g status-left "[#S]"
       set -g status-right "%Y-%m-%d %H:%M #H"
+	  set -g default-terminal "tmux-256color"
+	  set -ag terminal-overrides ",xterm-256color:RGB"
     '';
   };
 

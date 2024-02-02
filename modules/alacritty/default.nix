@@ -1,7 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.alacritty = {
     enable = true;
     settings = {
+      env = { TERM = "xterm-256color"; };
       window = {
         padding = {
           x = 10;
@@ -57,9 +58,7 @@
           white = "#d8dee9";
         };
       };
-      cursor = {
-        style = "underline";
-      };
+      cursor = { style = "underline"; };
     };
   };
 }
