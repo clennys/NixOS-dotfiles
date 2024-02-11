@@ -1,6 +1,3 @@
-
-
-
 { config, inputs, pkgs, split-monitor-workspaces, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -9,7 +6,6 @@
     plugins = [
       split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
-    # TODO: Write in nix
     extraConfig = ''
             monitor=,preferred,auto,1
             monitor=eDP-1,preferred,auto,1.175
@@ -160,10 +156,10 @@
             # bind = ,XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle
             bind = ,XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle
 
-            # bind = ,XF86MonBrightnessDown, exec, brightnessctl set 5%-
-            # bind = ,XF86MonBrightnessUp, exec, brightnessctl set 5%+
-            bind = ,XF86MonBrightnessDown, exec, swayosd-client --brightness lower
-            bind = ,XF86MonBrightnessUp, exec, swayosd-client --brightness raise
+            bind = ,XF86MonBrightnessDown, exec, brightnessctl set 5%-
+            bind = ,XF86MonBrightnessUp, exec, brightnessctl set 5%+
+            # bind = ,XF86MonBrightnessDown, exec, swayosd-client --brightness lower
+            # bind = ,XF86MonBrightnessUp, exec, swayosd-client --brightness raise
 
             bind = ,XF86AudioPlay, exec, playerctl play-pause
             bind = ,XF86AudioNext, exec, playerctl next

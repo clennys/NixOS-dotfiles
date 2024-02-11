@@ -1,13 +1,18 @@
 { config, pkgs, unstable, split-monitor-workspaces, ... }: {
-  # if you config gets too long, split it up into smaller modules
   imports = [
-    # ./git # looks for ./git/defualt.nix
-    # ./hypr/hyprland.nix # looks for ./hypr/hyprland.nix
-    ../../modules/zsh
-    ../../modules/starship
-    ../../modules/fzf
-    ../../modules/alacritty
-	../../modules/hypr
+    ../opts/hypr
+    ../opts/waybar
+    ../opts/starship
+    ../opts/zsh
+    ../opts/fzf
+    ../opts/alacritty
+    ../opts/nvim
+    ../opts/system
+    ../opts/theme
+	../opts/tmux
+	../opts/swaync
+	../opts/wofi
+	../opts/swayidle
   ];
 
   # The User and Path it manages
@@ -25,64 +30,53 @@
       git
       firefox
       lazygit
-      # neovim
       discord
-      # neovim-nightly
+      firefox
+      alacritty
+      kitty
+      pcmanfm
+      nextcloud-client
+      zotero
+      okular
+      starship
+      gnome.networkmanager-vpnc
+      networkmanager-openvpn
+      celluloid
+      networkmanagerapplet
+      signal-desktop
+      spotify
+      wofi
+      brave
+      hyprpaper
+      hyprpicker
+      dunst
+      xdg-desktop-portal-hyprland
+      nixfmt
+      hyprland-protocols
+      gnome.gnome-keyring
+      polkit_gnome
+      pavucontrol
+      playerctl
+      brightnessctl
+      wdisplays
+      sway-contrib.grimshot
+      swaylock
+      swayidle
+      mpv
+      vscode.fhs
+      deluge-gtk
+      vimiv-qt
+      nix-prefetch-git
+      pnmixer
+      volumeicon
+      usbutils
+      nixd
+      swaynotificationcenter
+      waybar
+      foliate
+      btop
+      wl-mirror
     ] ++ [ unstable.beeper unstable.swayosd ];
-
-  gtk = {
-    enable = true;
-
-    iconTheme = {
-      name = "Papirus";
-      package = pkgs.papirus-icon-theme;
-    };
-
-    theme = {
-      name = "adw-gtk3";
-      package = pkgs.adw-gtk3;
-    };
-
-    cursorTheme = {
-      name = "Numix-Cursor";
-      package = pkgs.numix-cursor-theme;
-    };
-  };
-
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style.package = pkgs.adwaita-qt;
-    style.name = "adwaita";
-  };
-
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "application/pdf" = [ "org.kde.okular.desktop" "firefox.desktop" ];
-      "x-scheme-handler/http" = [ "firefox.desktop" "brave.desktop" ];
-      "x-scheme-handler/https" = [ "firefox.desktop" "brave.desktop" ];
-      "x-scheme-handler/chrome" = [ "firefox.desktop" "brave.desktop" ];
-      "text/html" = [ "firefox.desktop" "brave.desktop" ];
-      "application/x-extension-htm" = [ "firefox.desktop" "brave.desktop" ];
-      "application/x-extension-html" = [ "firefox.desktop" "brave.desktop" ];
-      "application/x-extension-shtml" = [ "firefox.desktop" "brave.desktop" ];
-      "application/xhtml+xml" = [ "firefox.desktop" "brave.desktop" ];
-      "application/x-extension-xhtml" = [ "firefox.desktop" "brave.desktop" ];
-      "application/x-extension-xht" = [ "firefox.desktop" "brave.desktop" ];
-      "image/png" = [ "vimiv.desktop" "firefox.desktop" "brave.desktop" ];
-      "image/jpeg" = [ "vimiv.desktop" "firefox.desktop" "brave.desktop" ];
-      "image/webp" = [ "firefox.desktop" "brave.desktop" ];
-    };
-  };
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-  };
 
   home.stateVersion = "23.11";
 }
