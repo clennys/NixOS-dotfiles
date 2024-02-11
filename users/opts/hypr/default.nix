@@ -91,7 +91,7 @@
             bind = $mainMod SHIFT, M, exec,	dman
             bind = $mainMod, N, exec, wofi --show=drun -M=fuzzy -i -I
             bind = $mainMod SHIFT, L, exec, swaylock -f -c 000000
-            bind = $mainMod SHIFT, S, exec, grimshot --notify save area
+            bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -
             bind = $mainMod, O, exec, dopen
             bind = $mainMod SHIFT, O, exec, ddown
             bind = $mainMod, X, exec, dpower
@@ -213,7 +213,7 @@
 
             env = QT_QPA_PLATFORM,wayland
             # exec-once=nextcloud
-            exec-once=hyprpaper
+            exec-once=wpaperd
             exec-once=gnome-keyring-daemon --daemonize --login
             exec-once=swaync
             exec-once=waybar

@@ -169,7 +169,7 @@
     blurls = [ "waybar" "swaync" "wofi" "swayosd" ];
     env = [ "QT_QPA_PLATFORM,wayland" ];
     exec-once = [
-      "exec-once=hyprpaper"
+      "exec-once=wpaperd"
       "exec-once=gnome-keyring-daemon --daemonize --login"
       "exec-once=swaync"
       "exec-once=waybar"

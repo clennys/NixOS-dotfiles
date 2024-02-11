@@ -13,5 +13,6 @@
 	./swaync
 	./wofi
 	./swayidle
+	./wpaperd
   ];
 }
