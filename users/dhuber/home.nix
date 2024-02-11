@@ -1,19 +1,5 @@
 { config, pkgs, unstable, split-monitor-workspaces, ... }: {
-  imports = [
-    ../opts/hypr
-    ../opts/waybar
-    ../opts/starship
-    ../opts/zsh
-    ../opts/fzf
-    ../opts/alacritty
-    ../opts/nvim
-    ../opts/system
-    ../opts/theme
-	../opts/tmux
-	../opts/swaync
-	../opts/wofi
-	../opts/swayidle
-  ];
+  imports = [ ../opts ];
 
   # The User and Path it manages
   home.username = "dhuber";
@@ -76,7 +62,12 @@
       foliate
       btop
       wl-mirror
-    ] ++ [ unstable.beeper unstable.swayosd ];
+    ] ++ [ unstable.beeper unstable.swayosd ] ++ [
+      (import ../scripts/wofi/dman.nix { inherit pkgs; })
+      (import ../scripts/wofi/dpower.nix { inherit pkgs; })
+      (import ../scripts/wofi/dopen.nix { inherit pkgs; })
+      (import ../scripts/wofi/ddown.nix { inherit pkgs; })
+    ];
 
   home.stateVersion = "23.11";
 }

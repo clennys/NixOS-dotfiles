@@ -88,13 +88,13 @@
             bind = $mainMod SHIFT, Return, exec, alacritty
             bind = $mainMod SHIFT, W, exec, brave
             bind = $mainMod, V, togglefloating,
-            bind = $mainMod SHIFT, M, exec,	~/.local/bin/dman
+            bind = $mainMod SHIFT, M, exec,	dman
             bind = $mainMod, N, exec, wofi --show=drun -M=fuzzy -i -I
             bind = $mainMod SHIFT, L, exec, swaylock -f -c 000000
             bind = $mainMod SHIFT, S, exec, grimshot --notify save area
-            bind = $mainMod, O, exec, ~/.local/bin/dopen
-            bind = $mainMod SHIFT, O, exec, ~/.local/bin/ddown
-            bind = $mainMod, X, exec, ~/.local/bin/dpower
+            bind = $mainMod, O, exec, dopen
+            bind = $mainMod SHIFT, O, exec, ddown
+            bind = $mainMod, X, exec, dpower
 
             # Move focus with mainMod + arrow keys
             bind = $mainMod, j, layoutmsg, cyclenext
