@@ -14,5 +14,7 @@
 	./wofi
 	./swayidle
 	./wpaperd
+	./firefox
+	./git
   ];
 }

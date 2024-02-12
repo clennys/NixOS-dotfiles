@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{
   programs.wpaperd = {
     enable = true;
     settings = {

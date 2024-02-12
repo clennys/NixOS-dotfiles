@@ -24,7 +24,7 @@
             }
             plugin {
                 split-monitor-workspaces {
-                    count = 8
+                    count = 5
                 }
             }
             general {

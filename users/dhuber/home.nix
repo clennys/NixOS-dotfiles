@@ -14,10 +14,8 @@
       home-manager
       zsh
       git
-      firefox
       lazygit
       discord
-      firefox
       alacritty
       kitty
       pcmanfm
