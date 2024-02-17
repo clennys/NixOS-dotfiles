@@ -16,5 +16,7 @@
 	./wpaperd
 	./firefox
 	./git
+	./zathura
+	./eza
   ];
 }

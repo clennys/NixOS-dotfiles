@@ -21,17 +21,15 @@
     shellAliases = {
       py = "python";
       v = "nvim";
-      ls = "exa --header --long --git";
       grep = "grep --color=auto";
       fpush = "git add . && git commit -m 'update' && git push";
       c = "clear";
       ungz = "tar -xvzf";
-      tree = "exa --tree";
     };
 
     initExtra = ''
       zstyle ':completion:*:descriptions' format '%d'
-         zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+         zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
          # >>> conda initialize >>>
          	__conda_setup="$('/home/dhuber/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
          	if [ $? -eq 0 ]; then

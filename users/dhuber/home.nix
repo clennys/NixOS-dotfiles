@@ -63,6 +63,7 @@
 	  grim
 	  slurp
 	  swappy
+	  zathura
     ] ++ [ unstable.beeper unstable.swayosd ] ++ [
       (import ../scripts/wofi/dman.nix { inherit pkgs; })
       (import ../scripts/wofi/dpower.nix { inherit pkgs; })
