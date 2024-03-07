@@ -13,11 +13,14 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
+    anyrun = {
+      url = "github:Kirottu/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, hyprland, home-manager,
-    split-monitor-workspaces,
-    ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, hyprland, home-manager
+    , split-monitor-workspaces, anyrun, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -42,7 +45,9 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.dhuber = import ./users/dhuber/home.nix;
-              home-manager.extraSpecialArgs = { inherit unstable split-monitor-workspaces inputs; };
+              home-manager.extraSpecialArgs = {
+                inherit unstable split-monitor-workspaces inputs anyrun;
+              };
             }
           ];
         };

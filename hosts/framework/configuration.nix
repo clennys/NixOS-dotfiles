@@ -130,7 +130,6 @@
   };
 
   programs.zsh.enable = true;
-  programs.direnv.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dhuber = {
@@ -174,7 +173,6 @@
     gnumake
     wget
     rsync
-    nix-direnv
     unzip
     ripgrep
     qt6.qtwayland
@@ -255,7 +253,7 @@
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewallallowedUDPPorts = [ ... ];
+  networking.firewall.allowedUDPPorts = [ 5353 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

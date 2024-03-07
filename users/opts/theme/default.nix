@@ -1,4 +1,4 @@
-{ pkgs, ... }: { 
+{ pkgs, ... }: {
   gtk = {
     enable = true;
 
@@ -24,6 +24,4 @@
     style.package = pkgs.adwaita-qt;
     style.name = "adwaita";
   };
-
-
-	}
+}

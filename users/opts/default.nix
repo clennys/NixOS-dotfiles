@@ -18,5 +18,7 @@
 	./git
 	./zathura
 	./eza
+	./direnv
+	# ./anyrun
   ];
 }

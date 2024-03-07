@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, split-monitor-workspaces, ... }: {
+{ config, pkgs, unstable, split-monitor-workspaces, anyrun, ... }: {
   imports = [ ../opts ];
 
   # The User and Path it manages
@@ -31,7 +31,7 @@
       spotify
       wofi
       brave
-	  wpaperd
+      wpaperd
       hyprpicker
       dunst
       xdg-desktop-portal-hyprland
@@ -60,16 +60,17 @@
       foliate
       btop
       wl-mirror
-	  grim
-	  slurp
-	  swappy
-	  zathura
+      grim
+      slurp
+      swappy
+      zathura
     ] ++ [ unstable.beeper unstable.swayosd ] ++ [
       (import ../scripts/wofi/dman.nix { inherit pkgs; })
       (import ../scripts/wofi/dpower.nix { inherit pkgs; })
       (import ../scripts/wofi/dopen.nix { inherit pkgs; })
       (import ../scripts/wofi/ddown.nix { inherit pkgs; })
-    ];
+      (import ../scripts/hypr/sleep.nix { inherit pkgs; })
+    ] ++ [ anyrun.packages."x86_64-linux".anyrun ];
 
   home.stateVersion = "23.11";
 }
