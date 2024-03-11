@@ -29,7 +29,13 @@
            set -g status-left ""
            set -g status-bg default
 		   set -g status-interval 1
-           set -g status-right "#(pomo)"
+
+		   bind -n C-h select-pane -L
+		   bind -n C-j select-pane -D
+		   bind -n C-k select-pane -U
+		   bind -n C-l select-pane -R
+
+		   set -g -a terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
 
 		   set -g default-terminal "tmux-256color"
            set -ag terminal-overrides ",xterm-256color:RGB"
