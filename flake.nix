@@ -51,6 +51,12 @@
             }
           ];
         };
+		minimal-iso = lib.nixosSystem {
+			specialArgs = {inherit inputs;};
+			modules = [
+			./hosts/isoimages/minimal-iso.nix
+			];
+		};
       };
     };
 }
