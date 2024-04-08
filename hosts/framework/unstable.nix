@@ -8,7 +8,7 @@
   unstable = import <nixos-unstable> {config = baseconfig;};
 in {
   environment.systemPackages = with pkgs; [
-	unstable.swayosd
-	unstable.beeper
+    unstable.swayosd
+    unstable.beeper
   ];
 }

@@ -1,4 +1,4 @@
-{ pkgs }:
+{pkgs}:
 pkgs.writeShellScriptBin "dopen" ''
   filemanager=pcmanfm
   term=alacritty

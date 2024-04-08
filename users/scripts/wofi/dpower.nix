@@ -1,13 +1,13 @@
-{ pkgs }:
+{pkgs}:
 pkgs.writeShellScriptBin "dpower" ''
-choices="shutdown\nreboot\nhibernate\nlock"
+  choices="shutdown\nreboot\nhibernate\nlock"
 
-chosen=$(echo -e "$choices" | wofi --show=dmenu -p "Powermenu:")
+  chosen=$(echo -e "$choices" | wofi --show=dmenu -p "Powermenu:")
 
-case "$chosen" in
-	shutdown) systemctl poweroff;;
-	reboot) systemctl reboot;;
-	hibernate) systemctl hibernate;;
-	lock) swaylock -f -c 000000;;
-esac
+  case "$chosen" in
+  	shutdown) systemctl poweroff;;
+  	reboot) systemctl reboot;;
+  	hibernate) systemctl hibernate;;
+  	lock) swaylock -f -c 000000;;
+  esac
 ''

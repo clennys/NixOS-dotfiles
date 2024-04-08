@@ -1,5 +1,9 @@
-{ config, pkgs, unstable, split-monitor-workspaces, anyrun, ... }: {
-  imports = [ ../opts ];
+{
+  pkgs,
+  unstable,
+  ...
+}: {
+  imports = [../../modules/homemanager];
 
   # The User and Path it manages
   home.username = "dhuber";
@@ -12,30 +16,19 @@
   home.packages = with pkgs;
     [
       home-manager
-      zsh
-      git
       lazygit
       discord
-      alacritty
       kitty
       pcmanfm
-      nextcloud-client
-      zotero
       okular
-      starship
       gnome.networkmanager-vpnc
       networkmanager-openvpn
       celluloid
       networkmanagerapplet
-      signal-desktop
       spotify
-      wofi
       brave
-      wpaperd
       hyprpicker
-      dunst
       xdg-desktop-portal-hyprland
-      nixfmt
       hyprland-protocols
       gnome.gnome-keyring
       polkit_gnome
@@ -54,23 +47,26 @@
       pnmixer
       volumeicon
       usbutils
-      nixd
+      # nixd
       swaynotificationcenter
       waybar
-      foliate
       btop
       wl-mirror
       grim
       slurp
       swappy
-      zathura
-    ] ++ [ unstable.beeper unstable.swayosd ] ++ [
-      (import ../scripts/wofi/dman.nix { inherit pkgs; })
-      (import ../scripts/wofi/dpower.nix { inherit pkgs; })
-      (import ../scripts/wofi/dopen.nix { inherit pkgs; })
-      (import ../scripts/wofi/ddown.nix { inherit pkgs; })
-      (import ../scripts/hypr/sleep.nix { inherit pkgs; })
-    ] ++ [ anyrun.packages."x86_64-linux".anyrun ];
+      numbat
+      anki
+      gnome.seahorse
+    ]
+    ++ [unstable.beeper unstable.swayosd]
+    ++ [
+      (import ../scripts/wofi/dman.nix {inherit pkgs;})
+      (import ../scripts/wofi/dpower.nix {inherit pkgs;})
+      (import ../scripts/wofi/dopen.nix {inherit pkgs;})
+      (import ../scripts/wofi/ddown.nix {inherit pkgs;})
+      (import ../scripts/hypr/sleep.nix {inherit pkgs;})
+    ];
 
   home.stateVersion = "23.11";
 }
