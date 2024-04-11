@@ -3,8 +3,8 @@
   lib,
   ...
 }: {
-  options = {xdg.enable = lib.mkEnableOption "enables xdg";};
-  config = lib.mkIf config.xdg.enable {
+  options = {xdg-mime.enable = lib.mkEnableOption "enables xdg";};
+  config = lib.mkIf config.xdg-mime.enable {
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
