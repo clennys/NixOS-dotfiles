@@ -23,7 +23,10 @@
           "browser.newtabpage.activity-stream.section.highlights.includePocket" =
             false;
         };
+		# containersForce = true;
         containers = {
+          # TODO: Fix available with next home-manager release: https://github.com/nix-community/home-manager/pull/5057
+          # force = true;
           "Personal" = {
             color = "purple";
             icon = "circle";
@@ -53,7 +56,7 @@
         # TODO: Use https://github.com/nix-community/NUR ?
         # extensions = {};
         search = {
-          default = "Google";
+          default = "SearXNG";
           force = true;
           engines = {
             "Nix Packages" = {
@@ -91,6 +94,10 @@
             };
 
             "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+            "SearXNG" = {
+              urls = [{template = "http://localhost:8080/search?q={searchTerms}";}];
+              definedAliases = ["@s"];
+            };
           };
         };
       };

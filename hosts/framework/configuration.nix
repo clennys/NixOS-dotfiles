@@ -9,6 +9,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware/hardware-configuration.nix
+	../../modules/nixos/containers
   ];
 
   # Bootloader.
@@ -179,6 +180,7 @@
     libnotify
     podman
     podman-compose
+	podman-tui
   ];
 
   services.fprintd = {enable = true;};
