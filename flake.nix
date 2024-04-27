@@ -45,7 +45,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.dhuber = import ./users/dhuber/home.nix;
             home-manager.extraSpecialArgs = {inherit inputs outputs unstable;};
-			home-manager.sharedModules = [ ./modules/homemanager ];
+			# home-manager.sharedModules = [ ./modules/homemanager ];
           }
         ];
       };

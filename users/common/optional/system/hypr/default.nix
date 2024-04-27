@@ -256,7 +256,7 @@
                                exec-once=waybar
                                exec-once=nm-applet
                                exec-once=tmux new -s daemon -d
-                               exec-once=hypr-sleep
+                               exec-once=hypridle
                                exec-once=swayosd-server
 
       '';

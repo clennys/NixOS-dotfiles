@@ -3,7 +3,7 @@
   unstable,
   ...
 }: {
-  imports = [../../modules/homemanager];
+  imports = [../common/optional];
 
   # The User and Path it manages
   home.username = "dhuber";
@@ -59,13 +59,13 @@
       anki
       gnome.seahorse
     ]
-    ++ [unstable.beeper unstable.swayosd]
+    ++ [unstable.beeper unstable.swayosd unstable.hyprlock unstable.hypridle]
     ++ [
-      (import ../scripts/wofi/dman.nix {inherit pkgs;})
-      (import ../scripts/wofi/dpower.nix {inherit pkgs;})
-      (import ../scripts/wofi/dopen.nix {inherit pkgs;})
-      (import ../scripts/wofi/ddown.nix {inherit pkgs;})
-      (import ../scripts/hypr/sleep.nix {inherit pkgs;})
+      (import ../common/optional/scripts/wofi/dman.nix {inherit pkgs;})
+      (import ../common/optional/scripts/wofi/dpower.nix {inherit pkgs;})
+      (import ../common/optional/scripts/wofi/dopen.nix {inherit pkgs;})
+      (import ../common/optional/scripts/wofi/ddown.nix {inherit pkgs;})
+      (import ../common/optional/scripts/hypr/sleep.nix {inherit pkgs;})
     ];
 
   home.stateVersion = "23.11";

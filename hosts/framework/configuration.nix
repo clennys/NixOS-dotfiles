@@ -255,7 +255,7 @@
       u2fAuth = true;
       fprintAuth = false;
     };
-    swaylock = {
+    hyprlock = {
       text = ''
         auth include login
       '';
