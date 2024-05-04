@@ -31,6 +31,11 @@
     };
     lib = nixpkgs.lib;
   in {
+    nixosModules = import ./modules/nixos;
+    homeManagerModules = import ./modules/homemanager;
+    # overlays = import ./overlays { inherit inputs outputs; };
+    devShells = import ./shell.nix {inherit system pkgs;};
+
     nixosConfigurations = {
       framework = lib.nixosSystem {
         inherit system;
@@ -45,7 +50,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.dhuber = import ./users/dhuber/home.nix;
             home-manager.extraSpecialArgs = {inherit inputs outputs unstable;};
-			# home-manager.sharedModules = [ ./modules/homemanager ];
+            # home-manager.sharedModules = [ ./modules/homemanager ];
           }
         ];
       };

@@ -10,6 +10,7 @@
       enable = true;
       settings = {
         env = {TERM = "xterm-256color";};
+		dynamic_title = true;
         window = {
           padding = {
             x = 10;

@@ -28,7 +28,7 @@
 
       shellAliases = {
         py = "python";
-        v = "nvim";
+        nv = "nvim";
         grep = "grep --color=auto";
         fpush = "git add . && git commit -m 'update' && git push";
         c = "clear";
@@ -36,21 +36,34 @@
       };
 
       initExtra = ''
+		# case "$TERM" in (rxvt|rxvt-*|st|st-*|*xterm*|(dt|k|E)term)
+		local term_title () { print -n "\e]0;''${(j: :q)@}\a" }
+			precmd () {
+			  local DIR="$(print -P '[%c]%#')"
+			  term_title "$DIR" "zsh"
+			}
+			preexec () {
+			  local DIR="$(print -P '[%c]%#')"
+			  local CMD="''${(j:\n:)''${(f)1}}"
+			  term_title "$DIR" "$CMD"
+			}
+		  # ;;
+		# esac
         zstyle ':completion:*:descriptions' format '%d'
-           zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-           # >>> conda initialize >>>
-           	__conda_setup="$('/home/dhuber/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-           	if [ $? -eq 0 ]; then
-           		eval "$__conda_setup"
-           	else
-           		if [ -f "/home/dhuber/.conda/etc/profile.d/conda.sh" ]; then
-           			. "/home/dhuber/.conda/etc/profile.d/conda.sh"
-           		else
-           			export PATH="/home/dhuber/.conda/bin:$PATH"
-           		fi
-           	fi
-           	unset __conda_setup
-           # <<< conda initialize <<<
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+        # >>> conda initialize >>>
+        __conda_setup="$('/home/dhuber/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+			eval "$__conda_setup"
+        else
+			if [ -f "/home/dhuber/.conda/etc/profile.d/conda.sh" ]; then
+				. "/home/dhuber/.conda/etc/profile.d/conda.sh"
+			else
+				export PATH="/home/dhuber/.conda/bin:$PATH"
+			fi
+        fi
+        unset __conda_setup
+        # <<< conda initialize <<<
       '';
       plugins = [
         {

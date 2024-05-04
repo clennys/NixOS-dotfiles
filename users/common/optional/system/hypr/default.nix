@@ -16,7 +16,7 @@
       ];
       extraConfig = ''
                                monitor=,preferred,auto,1
-                               monitor=eDP-1,preferred,auto,1.175
+                               monitor=eDP-1,preferred,auto,1.175000
                                input {
                                    kb_layout = us, us, ch
                                    kb_variant = dvorak-alt-intl, altgr-intl
@@ -99,11 +99,12 @@
                                bind = $mainMod, V, togglefloating,
                                bind = $mainMod SHIFT, M, exec,	dman
                                bind = $mainMod, N, exec, wofi --show=drun -M=fuzzy -i -I
-                               bind = $mainMod SHIFT, L, exec, swaylock -f -e -i ~/.dotfiles/users/opts/wpaperd/wallpapers/FW_16_Wallpaper_OG.png
+                               bind = $mainMod SHIFT, L, exec, hyprlock
         					   bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -
                                bind = $mainMod, O, exec, dopen
                                bind = $mainMod SHIFT, O, exec, ddown
                                bind = $mainMod, X, exec, dpower
+							   bind = $mainMod SHIFT, N, exec, swaync-client -t 
 
                                # Move focus with mainMod + arrow keys
                                bind = $mainMod, j, layoutmsg, cyclenext
@@ -210,7 +211,7 @@
                                #bind = $mainMod SHIFT, comma ,split-changemonitor, prev
 
                       # trigger when the switch is toggled
-                         # bindl=,switch:[switch name],exec,swaylock
+                         # bindl=,switch:[switch name],exec, hyprlock
                       # trigger when the switch is turning on
                       bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,1.175"
                       # trigger when the switch is turning off
@@ -253,6 +254,7 @@
                                exec-once=wpaperd
                                exec-once=gnome-keyring-daemon --daemonize --login
                                exec-once=swaync
+							   exec-once=ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr
                                exec-once=waybar
                                exec-once=nm-applet
                                exec-once=tmux new -s daemon -d

@@ -1,21 +1,48 @@
 {
   config,
   lib,
+  unstable,
   ...
 }: {
   options = {waybar.enable = lib.mkEnableOption "enables waybar";};
   config = lib.mkIf config.waybar.enable {
     programs.waybar = {
       enable = true;
+      package = unstable.waybar;
       settings = [
         {
           layer = "top";
           position = "top";
-          height = 22;
+          height = 24;
           modules-left = ["hyprland/workspaces"];
           modules-center = ["clock"];
           modules-right = ["privacy" "tray" "pulseaudio" "battery"];
-          tray = {spacing = 10;};
+          "hyprland/workspaces" = {
+            "format" = "{icon}: {windows} ";
+            "format-window-separator" = "  ";
+            "window-rewrite-default" = "";
+            "window-rewrite" = {
+              "title<.*youtube.*>" = "󰗃";
+              "class<firefox>" = "";
+              "title<.*github.*>" = "";
+              "title<.*nix.*>" = "󱄅";
+              "title<.*vim.*>" = "";
+              "alacritty" = "";
+              "code" = "󰨞";
+              "spotify" = "󰓇";
+              "pcmanfm" = "󰉋";
+              "okular" = "󰈔";
+              "zathura" = "󰈔";
+              "celluloid" = "󰎁";
+              "mpv" = "󰎁";
+              "beeper" = "󰵅";
+            };
+          };
+          tray = {
+            spacing = 15;
+            reverse-direction = true;
+            # icon-size = 18;
+          };
           clock = {
             format = "{:%a %Y-%m-%d %H:%M}";
             tooltip-format = "<span size='9pt' font='Fragment Mono'>{calendar}</span>";
@@ -89,8 +116,8 @@
           };
 
           privacy = {
-            icon-spacing = 4;
-            icon-size = 18;
+            icon-spacing = 10;
+            # icon-size = 18;
             transition-duration = 250;
             modules = [
               {
@@ -109,6 +136,13 @@
                 tooltip-icon-size = 24;
               }
             ];
+          };
+          "wlr/taskbar" = {
+            format = "{icon}";
+            icon-theme = "Numix-Circle";
+            tooltip-format = "{title}";
+            on-click = "activate";
+            on-click-middle = "close";
           };
         }
       ];
@@ -147,6 +181,7 @@
             color: white;
         	background: #285577;
             font-weight: bold;
+			border-radius: 8px;
             /* border-top: 2px solid #5e81ac; */
         }
 
@@ -155,7 +190,7 @@
             border-bottom: 3px solid white;
         }
 
-        #clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #pulseaudio.muted {
+        #clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #pulseaudio.muted, #privacy{
             padding: 0 4px;
             margin: 0 6px;
         }

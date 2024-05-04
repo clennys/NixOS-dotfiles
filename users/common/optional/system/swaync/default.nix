@@ -11,7 +11,7 @@
 
         "positionX": "center",
         "positionY": "top",
-        "control-center-positionX": "center",
+        "control-center-positionX": "right",
         "control-center-positionY": "top",
         "control-center-margin-top": 8,
         "control-center-margin-bottom": 8,
@@ -19,7 +19,7 @@
         "control-center-margin-left": 8,
         "control-center-width": 500,
         "control-center-height": 600,
-        "fit-to-screen": false,
+        "fit-to-screen": true,
 
         "layer": "overlay",
         "control-center-layer": "overlay",
@@ -88,6 +88,10 @@
         margin-top: 0;
         padding: 0 0;
       }
+
+	  .blank-window {  
+		  background: transparent;  
+		}
 
       .notification-row:focus, .notification-row:hover {
       }
@@ -474,7 +478,7 @@
       .widget-mpris .widget-mpris-player {
         padding: 8px;
         margin: 16px 20px;
-        background-color: rgba(0,0,0,0.8);
+        background-color: @noti-border-color;
         border-radius: 12px;
         border: 1px solid rgba(255,255,255,0.15);
       /*  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);*/

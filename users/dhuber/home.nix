@@ -37,8 +37,8 @@
       brightnessctl
       wdisplays
       sway-contrib.grimshot
-      swaylock
-      swayidle
+      # swaylock
+      # swayidle
       mpv
       vscode.fhs
       deluge-gtk
@@ -47,9 +47,8 @@
       pnmixer
       volumeicon
       usbutils
-      # nixd
+	  nil
       swaynotificationcenter
-      waybar
       btop
       wl-mirror
       grim
@@ -59,7 +58,7 @@
       anki
       gnome.seahorse
     ]
-    ++ [unstable.beeper unstable.swayosd unstable.hyprlock unstable.hypridle]
+    ++ [unstable.beeper unstable.swayosd unstable.hyprlock unstable.hypridle unstable.waybar]
     ++ [
       (import ../common/optional/scripts/wofi/dman.nix {inherit pkgs;})
       (import ../common/optional/scripts/wofi/dpower.nix {inherit pkgs;})
