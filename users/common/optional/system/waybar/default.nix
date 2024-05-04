@@ -117,7 +117,7 @@
 
           privacy = {
             icon-spacing = 10;
-            # icon-size = 18;
+            icon-size = 15;
             transition-duration = 250;
             modules = [
               {
@@ -174,6 +174,7 @@
             padding: 0 5px;
             background: transparent;
             color: white;
+			border-radius: 8px;
             border-top: 2px solid transparent;
         }
 
@@ -181,16 +182,15 @@
             color: white;
         	background: #285577;
             font-weight: bold;
-			border-radius: 8px;
-            /* border-top: 2px solid #5e81ac; */
+        }
+	 #workspaces button.urgent{
+            color: white;
+        	background: #bf616a;
+            font-weight: bold;
         }
 
-        #mode {
-            background: #64727D;
-            border-bottom: 3px solid white;
-        }
 
-        #clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #pulseaudio.muted, #privacy{
+		#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #pulseaudio.muted, #privacy{
             padding: 0 4px;
             margin: 0 6px;
         }
@@ -215,8 +215,9 @@
 
         @keyframes blink {
             to {
-                background-color: #ffffff;
-                color: black;
+                background-color: #bf616a;
+				border-radius: 8px;
+                color: white;
             }
         }
 
@@ -245,10 +246,6 @@
         }
 
         #pulseaudio.muted {
-        }
-
-
-        #tray {
         }
 
 
