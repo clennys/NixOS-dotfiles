@@ -3,7 +3,7 @@
   inputs,
   pkgs,
   lib,
-  unstable,
+  # unstable,
   ...
 }: {
   options = {hyprland.enable = lib.mkEnableOption "enables hyprland";};
@@ -11,9 +11,9 @@
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.enable = true;
-      # xwayland.enable = true;
-      # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-      package = unstable.hyprland;
+      xwayland.enable = true;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      # package = unstable.hyprland;
       plugins = [
         # split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
       ];
