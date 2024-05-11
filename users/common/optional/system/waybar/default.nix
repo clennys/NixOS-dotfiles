@@ -36,6 +36,8 @@
               "celluloid" = "󰎁";
               "mpv" = "󰎁";
               "beeper" = "󰵅";
+			  "class<virt-manager>" = "";
+			  "class<discord>" = "󰙯";
             };
           };
           tray = {

@@ -54,6 +54,7 @@
           }
         ];
       };
+	  # INFO: Command: nix build .#nixosConfigurations.minimal-iso.config.system.build.isoImage
       minimal-iso = lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [./hosts/isoimages/minimal-iso.nix];
