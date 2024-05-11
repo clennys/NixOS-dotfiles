@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.url = "github:hyprwm/Hyprland";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,7 +15,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
-    hyprland,
+    # hyprland,
     home-manager,
     ...
   } @ inputs: let
@@ -42,7 +42,7 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./hosts/framework/configuration.nix
-          hyprland.nixosModules.default
+          # hyprland.nixosModules.default
           {programs.hyprland.enable = true;}
           home-manager.nixosModules.home-manager
           {
