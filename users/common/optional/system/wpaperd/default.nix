@@ -9,7 +9,7 @@
       enable = true;
       settings = {
         default = {
-          path = "~/.dotfiles/users/opts/wpaperd/wallpapers/Barents_bloom.jpg";
+          path = "~/.dotfiles/users/common/optional/system/wpaperd/wallpapers/Barents_bloom.jpg";
         };
       };
     };

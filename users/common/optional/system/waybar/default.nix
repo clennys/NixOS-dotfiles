@@ -12,11 +12,11 @@
       settings = [
         {
           layer = "top";
-          position = "top";
-          height = 24;
-          modules-left = ["hyprland/workspaces"];
-          modules-center = ["clock"];
-          modules-right = ["privacy" "tray" "pulseaudio" "battery"];
+          position = "bottom";
+          height = 26;
+          modules-left = ["hyprland/workspaces" "hyprland/window"];
+          modules-center = [];
+          modules-right = ["privacy" "tray" "pulseaudio" "battery" "clock"];
           "hyprland/workspaces" = {
             "format" = "{icon}: {windows} ";
             "format-window-separator" = "  ";
@@ -24,6 +24,7 @@
             "window-rewrite" = {
               "title<.*youtube.*>" = "󰗃";
               "class<firefox>" = "";
+              "class<steam>" = "󰓓";
               "title<.*github.*>" = "";
               "title<.*nix.*>" = "󱄅";
               "title<.*vim.*>" = "";
@@ -40,10 +41,15 @@
 			  "class<discord>" = "󰙯";
             };
           };
+		  "hyprland/window" = {
+			  # format = ">    {}";
+			  format = "> {}";
+			  separate-outputs = true;
+		  };
           tray = {
             spacing = 15;
             reverse-direction = true;
-            # icon-size = 18;
+            icon-size = 16;
           };
           clock = {
             format = "{:%a %Y-%m-%d %H:%M}";
@@ -119,7 +125,7 @@
 
           privacy = {
             icon-spacing = 10;
-            icon-size = 15;
+            icon-size = 16;
             transition-duration = 250;
             modules = [
               {

@@ -3,7 +3,6 @@
   inputs,
   pkgs,
   lib,
-  # unstable,
   ...
 }: {
   options = {hyprland.enable = lib.mkEnableOption "enables hyprland";};
@@ -13,7 +12,6 @@
       systemd.enable = true;
       xwayland.enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-      # package = unstable.hyprland;
       plugins = [
         # split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
       ];
@@ -95,7 +93,8 @@
           "$mod, V, togglefloating,"
           "$mod SHIFT, M, exec,	~/.local/bin/dman"
           "$mod, N, exec, wofi --show=drun -M=fuzzy -i -I"
-          "$mod SHIFT, L, exec, swaylock -f -c 000000"
+          "$mod SHIFT, N, exec, swaync-client -t"
+          "$mod SHIFT, L, exec, hyprlock"
           "$mod SHIFT, S, exec, grimshot --notify save area"
           "$mod, O, exec, ~/.local/bin/dopen"
           "$mod SHIFT, O, exec, ~/.local/bin/ddown"
@@ -179,14 +178,15 @@
         layerrule = ["blur, wofi" "blur, waybar" "blur, swaync" "ignorealpha 0.0, swaync"];
         env = ["QT_QPA_PLATFORM,wayland"];
         exec-once = [
-          "exec-once=wpaperd"
-          "exec-once=gnome-keyring-daemon --daemonize --login"
-          "exec-once=swaync"
-          "exec-once=waybar"
-          "exec-once=nm-applet"
-          "exec-once=tmux new -s daemon -d"
-          "exec-once=hypridle"
-          "exec-once=swayosd-server"
+          "wpaperd"
+          "gnome-keyring-daemon --daemonize --login"
+          "swaync"
+          "waybar"
+          "nm-applet"
+          "tmux new -s daemon -d"
+          "hypridle"
+          "swayosd-server"
+		  "blueman-applet"
         ];
       };
     };

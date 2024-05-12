@@ -250,6 +250,8 @@
   services.pcscd.enable = true;
   services.udev.packages = with pkgs; [yubikey-personalization libu2f-host];
 
+  programs.steam.enable = true;
+
   security.pam.services = {
     login = {
       u2fAuth = true;
