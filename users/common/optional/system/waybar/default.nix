@@ -12,11 +12,11 @@
       settings = [
         {
           layer = "top";
-          position = "bottom";
-          height = 26;
-          modules-left = ["hyprland/workspaces" "hyprland/window"];
-          modules-center = [];
-          modules-right = ["privacy" "tray" "pulseaudio" "battery" "clock"];
+          position = "top";
+          height = 27;
+          modules-left = ["hyprland/workspaces"];
+          modules-center = ["clock"];
+          modules-right = ["privacy" "tray" "pulseaudio" "battery"];
           "hyprland/workspaces" = {
             "format" = "{icon}: {windows} ";
             "format-window-separator" = "  ";
@@ -42,7 +42,6 @@
             };
           };
 		  "hyprland/window" = {
-			  # format = ">    {}";
 			  format = "> {}";
 			  separate-outputs = true;
 		  };
@@ -84,9 +83,9 @@
               warning = 30;
               critical = 15;
             };
-            format = "󱐋 {icon} ";
-            format-discharging = "{icon} ";
-            format-icons = ["" "" "" "" ""];
+            format = "󱐋 {icon}";
+            format-discharging = "{icon}";
+            format-icons = [" " " " " " " " " "];
             tooltip = true;
             tooltip-format = "{capacity}% - {timeTo}";
           };
@@ -106,7 +105,7 @@
 
           pulseaudio = {
             format = "{icon}";
-            format-bluetooth = " {icon}";
+            format-bluetooth = "{icon}";
             format-muted = "󰸈";
             format-icons = {
               headphone = "";
@@ -175,6 +174,7 @@
         /*
         #workspaces {
             padding: 0 5px;
+			border-radius: 4px;
         }
         */
 
@@ -182,7 +182,7 @@
             padding: 0 5px;
             background: transparent;
             color: white;
-			border-radius: 8px;
+			border-radius: 4px;
             border-top: 2px solid transparent;
         }
 
@@ -191,13 +191,12 @@
         	background: #285577;
             font-weight: bold;
         }
-	 #workspaces button.urgent{
+		 #workspaces button.urgent{
             color: white;
         	background: #bf616a;
             font-weight: bold;
         }
-
-
+		
 		#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #pulseaudio.muted, #privacy{
             padding: 0 4px;
             margin: 0 6px;
@@ -224,12 +223,12 @@
         @keyframes blink {
             to {
                 background-color: #bf616a;
-				border-radius: 8px;
+				border-radius: 4px;
                 color: white;
             }
         }
 
-        #battery.warning:not(.charging) {
+        #battery.critical:not(.charging) {
             color: white;
             animation-name: blink;
             animation-duration: 0.5s;

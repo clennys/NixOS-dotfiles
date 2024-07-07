@@ -9,7 +9,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware/hardware-configuration.nix
-	../../modules/nixos/containers
+    ../../modules/nixos/containers
   ];
 
   # Bootloader.
@@ -180,12 +180,21 @@
     libnotify
     podman
     podman-compose
-	podman-tui
+    podman-tui
   ];
 
   services.fprintd = {enable = true;};
 
-  services.tlp.enable = true;
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+    };
+  };
   powerManagement = {enable = true;};
 
   # similarly to how other distributions handle the fingerprinting login
@@ -237,8 +246,7 @@
       # Required for containers under podman-compose to be able to talk to each other.
       defaultNetwork.settings.dns_enabled = true;
     };
-	spiceUSBRedirection.enable = true;
-
+    spiceUSBRedirection.enable = true;
   };
 
   programs.virt-manager.enable = true;
@@ -291,5 +299,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 }

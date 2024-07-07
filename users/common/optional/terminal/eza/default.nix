@@ -13,8 +13,8 @@
       # 'la': List all files, including hidden
       # 'lt': Display directory tree
       # 'lla': Detailed list, all files
-      enableAliases = true;
-      # enableZshIntegration = true; # NOTE: Will replace enableAliases in next homemanager version
+      # enableAliases = true;
+      enableZshIntegration = true; # NOTE: Will replace enableAliases in next homemanager version
       git = true;
 
       extraOptions = ["--group-directories-first" "--header"];

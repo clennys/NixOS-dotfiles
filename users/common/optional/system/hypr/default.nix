@@ -95,7 +95,7 @@
           "$mod, N, exec, wofi --show=drun -M=fuzzy -i -I"
           "$mod SHIFT, N, exec, swaync-client -t"
           "$mod SHIFT, L, exec, hyprlock"
-          "$mod SHIFT, S, exec, grimshot --notify save area"
+          "$mod SHIFT, S, exec, grim -g \"$(slurp)\" - | swappy -f -"
           "$mod, O, exec, ~/.local/bin/dopen"
           "$mod SHIFT, O, exec, ~/.local/bin/ddown"
           "$mod, X, exec, ~/.local/bin/dpower"

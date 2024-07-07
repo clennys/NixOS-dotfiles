@@ -47,7 +47,7 @@
       pnmixer
       volumeicon
       usbutils
-	  nil
+      nil
       swaynotificationcenter
       btop
       wl-mirror
@@ -57,8 +57,20 @@
       numbat
       anki
       gnome.seahorse
+	  # pandoc
+	  # texliveBasic
+	  # kile
+	  foliate
+	  zotero
     ]
-    ++ [unstable.beeper unstable.swayosd unstable.hyprlock unstable.hypridle unstable.waybar]
+    ++ [
+      unstable.beeper
+      unstable.swayosd
+      unstable.hyprlock
+      unstable.hypridle
+      unstable.waybar
+      unstable.nh
+    ]
     ++ [
       (import ../common/optional/scripts/wofi/dman.nix {inherit pkgs;})
       (import ../common/optional/scripts/wofi/dpower.nix {inherit pkgs;})
@@ -67,5 +79,5 @@
       (import ../common/optional/scripts/hypr/sleep.nix {inherit pkgs;})
     ];
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
 }
