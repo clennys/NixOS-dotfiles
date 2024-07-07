@@ -70,7 +70,7 @@
         };
         master = {
           allow_small_split = true;
-          new_is_master = true;
+          new_status = "inherit";
           new_on_top = true;
           # no_gaps_when_only = true
           mfact = 0.5;
